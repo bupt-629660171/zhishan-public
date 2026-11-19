@@ -1,6 +1,31 @@
-# 知源智膳
+# 知源食养（原「知源智膳」）
 
-面向沙河校区食堂的中医食养辅助系统：用户填写体质问卷与当日状态，系统在本地规则库中给出"禁 / 慎 / 宜"结论，再由大模型把结论解释成人话。目标是在"今天食堂吃什么"这一高频场景里，把中医食养原则变成可执行、可审计的每日方案。技术栈为 Python 3.14 + Streamlit 1.66 + SQLite，规则全部为草案，**未经执业中医师审核，不构成医疗建议**。
+面向高校食堂的中医食养参考系统：选一下最近两周的身体感受，系统在本地规则库里给出「推荐 / 适量 / 暂不建议」，再由大模型把理由说成人话。目标是在"今天食堂吃什么"这个高频场景里，把食养原则变成可执行、可追溯的每日选择。
+
+**在线 Demo**：https://zhishan-public-tkbc6ffyxbnbmidexcspoz.streamlit.app/
+
+![桌面端](design/preview-v3-desktop.png)
+
+> 本项目只做日常饮食参考，**不用于诊断、开方，也不替代医生**。如有持续不适或过敏，请及时就医。
+> 规则已由指导教师审核（v1.1.0），但仍不构成医疗建议。
+
+## 它解决什么问题
+
+食堂菜单少说上百道，忌口、体质、口味、价格各占一头。多数人最后靠"随便吃点"结束。
+这个项目把选择收敛为三步：**说清现在的状态 → 划掉不能吃的 → 从剩下的里挑三道并说明理由**。
+
+## 快速开始
+
+```bash
+git clone https://github.com/bupt-629660171/zhishan-public.git
+cd zhishan-public
+pip install -r requirements.txt
+python init_db.py          # 建库（约 3 秒）
+python tools.py gate       # 验收：单测 + 指标 + 数据完整性
+streamlit run app.py
+```
+
+不需要任何 API Key 也能用——解释默认走本地模板，离线可跑。
 
 ## 核心设计：双层防御
 
@@ -130,6 +155,10 @@ python tools.py hook --install           # 把门禁挂到 git pre-commit
 
 MIT License。规则、标签、Schema 版本分别见 `version.py` 的 `RULE_VERSION`（1.0.0）、`TAG_VERSION`（1.1.0）、`SCHEMA_VERSION`（3）；改动规则、标签或表结构须同步升版本，评测报告与方案文本据此定位。
 
+
+## 移动端
+
+![移动端](design/preview-v3-mobile.png)
 
 ## 开源与贡献
 
