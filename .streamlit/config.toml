@@ -1,0 +1,21 @@
+# 知源食养 · Streamlit 配置
+# 主题尽量贴近设计令牌；细粒度样式仍由 ui_theme.css() 注入。
+
+[theme]
+base = "light"
+primaryColor = "#5E7F52"
+backgroundColor = "#FAF6EE"
+secondaryBackgroundColor = "#F5EFE2"
+textColor = "#2B251E"
+font = "sans serif"
+
+[server]
+headless = true
+maxUploadSize = 5
+enableCORS = false
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "minimal"

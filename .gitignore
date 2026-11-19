@@ -1,0 +1,67 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.pytest_cache/
+
+# 临时文件
+.tmp/
+.env
+*.log
+
+# 数据库快照（food.db 可重建，个人备份不入库）
+*.db.before_*
+*.pre_p0_*.db
+
+# 历史归档目录（保留在本地，不提交）
+20261115_before_restore/
+backup/
+
+# Streamlit 密钥
+.streamlit/secrets.toml
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+# 编辑器工作区文件
+__pycache__.code-workspace
+
+
+# 生成的待标注清单（每次 tools.py labels 重新生成）
+labels_to_fill.csv
+
+
+# 临时分析文件
+_*.py
+_*.txt
+_*.jsonl
+
+
+# SQLite WAL 临时文件
+food.db-wal
+food.db-shm
+
+# 含他人的现场照片不入库
+docs/sources/
+
+
+# 数据库由 init_db.py 重建，不入库（含审核人名等）
+food.db
+
+
+# 浏览器/工具临时配置（截图、调试）
+design/.edge/
+design/.chrome/
+.export/
+
+
+# 导出与验证用临时目录
+dist/
+.export/
+.fresh/
+.fresh2/
+

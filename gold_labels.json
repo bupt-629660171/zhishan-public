@@ -1,0 +1,807 @@
+{
+  "generated_at": "2026-11-15T19:53:37",
+  "annotator": "项目负责人（含文献扩充批次）",
+  "source": "人工标注：对照菜品 explanation 与中医体质学判断",
+  "status": "120+ 版，待导师抽检",
+  "count": 133,
+  "labels": [
+    {
+      "name": "麻辣香锅",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "辛辣重油，气虚忌辣、耗气"
+    },
+    {
+      "name": "麻辣烫13元套餐",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "辛辣重油，气虚忌辣"
+    },
+    {
+      "name": "脆皮鸡饭",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "油炸燥热，气虚者难消化且易上火"
+    },
+    {
+      "name": "水煮毛血旺",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "大辛大热，气虚者易上火"
+    },
+    {
+      "name": "蛋糕",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "高糖甜腻碍胃，气虚者脾胃本弱"
+    },
+    {
+      "name": "蒜蓉卷章",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "油炸油腻，气虚者难消化"
+    },
+    {
+      "name": "西瓜",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "寒凉生津，气虚脾胃弱者慎用"
+    },
+    {
+      "name": "蛋黄烧卖",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "高脂高碳，极难消化、易生湿滞气"
+    },
+    {
+      "name": "山药鸡汤",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "山药健脾益气，鸡汤温补，适合气虚"
+    },
+    {
+      "name": "五谷渔粉",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "温润易消化，适合气虚调理"
+    },
+    {
+      "name": "清蒸鱼",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "清淡温润、高蛋白低脂，极易消化"
+    },
+    {
+      "name": "白灼虾",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "温补清淡，气虚者极佳选择"
+    },
+    {
+      "name": "馒头",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "健脾养胃，气虚必备主食"
+    },
+    {
+      "name": "玉米鲜肉",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "玉米健脾、鲜肉温补，粗细搭配"
+    },
+    {
+      "name": "米饭",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "平性碳水，补中益气，基础主食"
+    },
+    {
+      "name": "白灼生菜",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "清淡少油，不碍脾胃"
+    },
+    {
+      "name": "什锦杂粮",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "健脾益气，升糖指数低"
+    },
+    {
+      "name": "猪肉白萝卜包子",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "萝卜下气消食，中和猪肉油腻"
+    },
+    {
+      "name": "黄焖鸡米饭",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "温补偏油，气虚可少量，湿热少吃"
+    },
+    {
+      "name": "麻辣牛肉拼辣椒炒肉饭",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "大热大燥，极易生内热，湿热慎用"
+    },
+    {
+      "name": "水煮毛血旺",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "红油辣椒极多，湿热上火者绝对忌口"
+    },
+    {
+      "name": "巴蜀水煮肉片",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "重油辣，易生湿热火毒"
+    },
+    {
+      "name": "水煮肉",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "红油重辣，湿热体质大忌"
+    },
+    {
+      "name": "招牌卤肉饭",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "卤制肥腻多脂，易生痰湿"
+    },
+    {
+      "name": "蛋挞",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "高糖高油，甜腻碍胃，极易生痰湿"
+    },
+    {
+      "name": "酱香肘花",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "脂肪极高，易碍脾胃、助生湿热"
+    },
+    {
+      "name": "软糯鸡爪螺蛳粉",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "酸辣发散属发物，湿热体质者少吃"
+    },
+    {
+      "name": "酥肉小火锅",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "油炸配辛辣火锅，极易上火"
+    },
+    {
+      "name": "白灼生菜",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "清淡利水，富含膳食纤维，湿热者首选"
+    },
+    {
+      "name": "蒜蓉西兰花",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "高纤维、清淡少油，减脂首选"
+    },
+    {
+      "name": "减脂大拌菜",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "低卡低脂、利尿排湿，适合湿热"
+    },
+    {
+      "name": "清炒时蔬",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "清淡易消化，可减少油腻积热"
+    },
+    {
+      "name": "海带丝米粉",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "海带软坚，适合痰湿体质"
+    },
+    {
+      "name": "土豆丝",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "平性、健脾易消化，不助湿热"
+    },
+    {
+      "name": "白灼菜心",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "清热去火、少油健康"
+    },
+    {
+      "name": "菠菜鸡蛋",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "平性养阴，不偏不倚，各类体质皆宜"
+    },
+    {
+      "name": "西红柿鸡蛋",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "平性生津，酸甜开胃，大众皆宜"
+    },
+    {
+      "name": "绿豆",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "性寒，清热利水，伤脾阳"
+    },
+    {
+      "name": "苦瓜",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "性寒，清热泻火，脾胃虚寒者忌"
+    },
+    {
+      "name": "香蕉",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "性寒，清热润肠，脾虚者少食"
+    },
+    {
+      "name": "蟹",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "性寒，脾胃虚寒者忌"
+    },
+    {
+      "name": "海带",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "性寒，软坚利水，脾虚者不宜"
+    },
+    {
+      "name": "竹笋",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "性寒，清热化痰，脾胃虚弱者少食"
+    },
+    {
+      "name": "生姜",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "辛温发散，过食耗气（规则口径）"
+    },
+    {
+      "name": "大蒜",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "辛温，久食耗气伤阴"
+    },
+    {
+      "name": "花椒",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "辛温燥烈，耗气伤阴"
+    },
+    {
+      "name": "胡椒",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "辛热，助火耗气"
+    },
+    {
+      "name": "韭菜",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "辛温助阳，辛散耗气"
+    },
+    {
+      "name": "羊肉",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "性大热，温阳助火（规则口径）"
+    },
+    {
+      "name": "水煮鱼",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "麻辣重油，耗气伤阴"
+    },
+    {
+      "name": "红烧肉",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "肥腻多油，碍脾胃运化"
+    },
+    {
+      "name": "糖醋里脊",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "油炸裹糖，油糖俱高"
+    },
+    {
+      "name": "山药",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "补脾养胃、生津益肺，气虚者宜"
+    },
+    {
+      "name": "小米",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "健脾和胃，脾胃虚弱者宜"
+    },
+    {
+      "name": "大米",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "补中益气，日常主食"
+    },
+    {
+      "name": "牛肉",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "补气益血、强筋骨，气虚者宜"
+    },
+    {
+      "name": "鸡肉",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "温中益气、补精填髓"
+    },
+    {
+      "name": "鸡蛋",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "滋阴润燥、养血"
+    },
+    {
+      "name": "鲫鱼",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "健脾利湿、和中开胃"
+    },
+    {
+      "name": "南瓜",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "补中益气、健脾暖胃"
+    },
+    {
+      "name": "小米粥",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "健脾和胃，易消化"
+    },
+    {
+      "name": "山药粥",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "山药健脾益气，煮粥软糯"
+    },
+    {
+      "name": "清蒸南瓜",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "蒸制不加油，补中益气"
+    },
+    {
+      "name": "蒸蛋羹",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "蒸制少油，滋阴润燥"
+    },
+    {
+      "name": "清炖鸡汤",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "温中益气，清炖少油"
+    },
+    {
+      "name": "香菇",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "扶正补虚、健脾开胃"
+    },
+    {
+      "name": "土豆",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "健脾和胃，可代主食"
+    },
+    {
+      "name": "羊肉",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "性大热，助火生热，湿热者忌"
+    },
+    {
+      "name": "生姜",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "辛温助热"
+    },
+    {
+      "name": "大蒜",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "辛温助热生火"
+    },
+    {
+      "name": "胡椒",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "辛热助火"
+    },
+    {
+      "name": "韭菜",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "辛温助热"
+    },
+    {
+      "name": "虾",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "发物，湿热者慎（规则档位为慎，非遗禁）"
+    },
+    {
+      "name": "鹅肉",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "发物，湿热者慎（规则档位为慎，非遗禁）"
+    },
+    {
+      "name": "红烧肉",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "肥腻多油，助湿生痰"
+    },
+    {
+      "name": "糖醋里脊",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "油炸裹糖，油糖俱高"
+    },
+    {
+      "name": "麻婆豆腐",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "麻辣重油，助湿生热"
+    },
+    {
+      "name": "水煮鱼",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "麻辣重油，湿热者忌"
+    },
+    {
+      "name": "宫保鸡丁",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "辛辣多油，助热生湿"
+    },
+    {
+      "name": "南瓜饼",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "油炸甜腻，助湿生痰"
+    },
+    {
+      "name": "回锅肉",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "肥腻多油，助湿生痰"
+    },
+    {
+      "name": "地三鲜",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "过油偏咸，助湿生热"
+    },
+    {
+      "name": "冬瓜",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "清热利水、消肿，湿热者宜"
+    },
+    {
+      "name": "黄瓜",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "清热利水、解毒"
+    },
+    {
+      "name": "苦瓜",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "清热泻火、解毒，湿热者宜"
+    },
+    {
+      "name": "绿豆",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "清热解毒、消暑利水"
+    },
+    {
+      "name": "赤小豆",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "利水消肿，湿热者宜"
+    },
+    {
+      "name": "薏苡仁",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "健脾利湿、清热"
+    },
+    {
+      "name": "芹菜",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "平肝清热、利水"
+    },
+    {
+      "name": "海带",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "软坚散结、利水消肿"
+    },
+    {
+      "name": "马齿苋",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "清热解毒、利湿"
+    },
+    {
+      "name": "空心菜",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "清热凉血、利尿"
+    },
+    {
+      "name": "丝瓜",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "清热化痰、凉血解毒"
+    },
+    {
+      "name": "白菜",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "清热利水、养胃生津"
+    },
+    {
+      "name": "番茄",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "生津止渴、健胃消食"
+    },
+    {
+      "name": "绿豆汤",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "清热解毒、消暑利水"
+    },
+    {
+      "name": "红豆薏米水",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "利水祛湿，湿热者宜"
+    },
+    {
+      "name": "凉拌黄瓜",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "清热利水，凉拌少油"
+    },
+    {
+      "name": "苦瓜炒蛋",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "苦瓜清热，清炒少油"
+    },
+    {
+      "name": "猕猴桃",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "性寒，清热生津，脾虚者少食"
+    },
+    {
+      "name": "柿子",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "性寒，清热润肺，脾胃虚寒者忌"
+    },
+    {
+      "name": "蛤蜊",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "性寒，滋阴利水"
+    },
+    {
+      "name": "紫菜",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "性寒，清热利水"
+    },
+    {
+      "name": "洋葱",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "辛温发散，耗气"
+    },
+    {
+      "name": "葱",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "辛温发汗，过食耗气"
+    },
+    {
+      "name": "香菜",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "辛温发散"
+    },
+    {
+      "name": "桂皮",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "辛温燥烈，耗气伤阴"
+    },
+    {
+      "name": "南瓜饼",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "油炸甜腻，碍脾胃"
+    },
+    {
+      "name": "葱爆羊肉",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "辛温大热，耗气伤阴"
+    },
+    {
+      "name": "孜然羊肉",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "辛温偏燥，助热耗气"
+    },
+    {
+      "name": "萝卜炖羊肉",
+      "constitution": "气虚",
+      "expected": "禁",
+      "note": "大热温阳，气虚者不宜过补"
+    },
+    {
+      "name": "豆腐",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "清热润燥，性平不碍脾"
+    },
+    {
+      "name": "豆浆",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "补虚润燥"
+    },
+    {
+      "name": "饺子",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "面皮包馅，平性易消化"
+    },
+    {
+      "name": "馄饨",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "汤清易消化"
+    },
+    {
+      "name": "白粥",
+      "constitution": "气虚",
+      "expected": "非禁",
+      "note": "大米粥养胃生津"
+    },
+    {
+      "name": "孜然羊肉",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "辛温偏燥，助热生火"
+    },
+    {
+      "name": "萝卜炖羊肉",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "大热温阳，湿热者忌"
+    },
+    {
+      "name": "干锅花菜",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "辛辣多油，助湿生热"
+    },
+    {
+      "name": "干煸豆角",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "油辣偏重"
+    },
+    {
+      "name": "鱼香肉丝",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "酸甜多油，助湿生痰"
+    },
+    {
+      "name": "蚂蚁上树",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "粉丝吸油，多油偏咸"
+    },
+    {
+      "name": "蛋炒饭",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "炒制用油偏多"
+    },
+    {
+      "name": "炸酱面",
+      "constitution": "湿热",
+      "expected": "禁",
+      "note": "肉酱油盐偏重"
+    },
+    {
+      "name": "苋菜",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "清热利湿"
+    },
+    {
+      "name": "荠菜",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "清热利水"
+    },
+    {
+      "name": "生菜",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "清热利水"
+    },
+    {
+      "name": "清炒西兰花",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "清淡少油"
+    },
+    {
+      "name": "蒜蓉菠菜",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "清淡凉润，蒜蓉微辛不碍"
+    },
+    {
+      "name": "凉拌木耳",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "凉拌少油"
+    },
+    {
+      "name": "紫菜蛋花汤",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "汤清少油"
+    },
+    {
+      "name": "冬瓜排骨汤",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "冬瓜利水，汤清"
+    },
+    {
+      "name": "荞麦面",
+      "constitution": "湿热",
+      "expected": "非禁",
+      "note": "性凉，健脾消积"
+    }
+  ]
+}

@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="light" />
+<title>知源食养 · 今天吃什么，先看看身体感受</title>
+<style>
+  /* ================= 设计令牌 ================= */
+  :root{
+    --bg:#FAF6EE;            /* 暖白背景 */
+    --surface:#FFFDF8;       /* 卡片 */
+    --surface-2:#F5EFE2;     /* 次级面 */
+    --line:#E4DBC9;          /* 细边框 */
+    --line-strong:#3B3227;   /* 深棕，只用于强调件 */
+    --ink:#2B251E;           /* 正文 */
+    --ink-2:#6B6152;         /* 次要文字 */
+    --ink-3:#8C8171;         /* 辅助 */
+    --leaf:#5E7F52;          /* 草绿 */
+    --leaf-soft:#E7EEDF;
+    --clay:#B9643F;          /* 陶土橙 */
+    --clay-soft:#F6E3D8;
+    --gold:#C8973F;          /* 浅金 */
+    --gold-soft:#F7ECD5;
+
+    --r-sm:4px; --r-md:6px; --r-lg:8px;
+    --shadow-1:0 1px 0 rgba(59,50,39,.05), 0 2px 8px rgba(59,50,39,.06);
+    --shadow-2:0 2px 10px rgba(59,50,39,.10);
+    --maxw:1120px;
+    --mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+    --sans:"PingFang SC","Noto Sans SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:var(--sans);font-size:16px;line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{display:block;max-width:100%}
+  a{color:inherit}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+  /* 焦点：全站统一，键盘可见 */
+  :focus-visible{outline:3px solid var(--clay);outline-offset:3px;border-radius:var(--r-sm)}
+  .skip{
+    position:absolute;left:-9999px;top:0;background:var(--line-strong);color:#fff;
+    padding:10px 16px;z-index:100;border-radius:0 0 var(--r-sm) 0;
+  }
+  .skip:focus{left:0}
+
+  /* ================= 导航 ================= */
+  .nav{
+    position:sticky;top:0;z-index:40;background:rgba(250,246,238,.92);
+    backdrop-filter:saturate(120%) blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{max-width:var(--maxw);margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:20px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;text-decoration:none;letter-spacing:.02em}
+  .brand svg{width:28px;height:28px}
+  .nav-links{display:flex;gap:4px;margin-left:auto}
+  .nav-links a{
+    text-decoration:none;color:var(--ink-2);font-size:15px;padding:8px 12px;
+    border-radius:var(--r-sm);border:1px solid transparent;
+  }
+  .nav-links a:hover{background:var(--surface-2);color:var(--ink)}
+  .nav-links a[aria-current="true"]{color:var(--leaf);border-color:var(--leaf-soft);background:var(--leaf-soft)}
+  .menu-btn{
+    display:none;margin-left:auto;align-items:center;gap:8px;
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+    padding:8px 12px;font:inherit;font-size:14px;color:var(--ink);cursor:pointer;
+  }
+  .menu-btn:hover{background:var(--surface-2)}
+  .menu{display:none}
+  .menu[data-open="true"]{display:block}
+  .menu a{display:block;padding:12px 16px;text-decoration:none;color:var(--ink);border-top:1px solid var(--line)}
+  .menu a:hover{background:var(--surface-2)}
+
+  /* ================= 首屏 ================= */
+  .hero{padding:56px 0 40px}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+  .eyebrow{
+    font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--clay);display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;
+  }
+  .eyebrow::before{content:"";width:18px;height:2px;background:var(--clay)}
+  h1{font-size:clamp(30px,4vw,44px);line-height:1.25;margin:0 0 16px;letter-spacing:.01em}
+  .lede{font-size:17px;color:var(--ink-2);margin:0 0 28px;max-width:36ch}
+  .actions{display:flex;gap:12px;flex-wrap:wrap}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    min-height:46px;padding:0 20px;border-radius:var(--r-md);
+    font:inherit;font-weight:600;cursor:pointer;text-decoration:none;
+    border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);
+    box-shadow:var(--shadow-1);
+    transition:transform .08s ease,box-shadow .08s ease,background .15s ease;
+  }
+  .btn:hover{background:var(--surface-2);box-shadow:var(--shadow-2)}
+  .btn:active{transform:translateY(1px);box-shadow:none}
+  .btn--primary{background:var(--leaf);border-color:#4E6B44;color:#fff}
+  .btn--primary:hover{background:#547248}
+  .btn--ghost{background:transparent;border-color:var(--line);box-shadow:none;color:var(--ink-2)}
+  .btn--ghost:hover{background:var(--surface-2);color:var(--ink)}
+  .btn[disabled]{opacity:.45;cursor:not-allowed;box-shadow:none}
+  .btn--sm{min-height:38px;padding:0 14px;font-size:14px;border-radius:var(--r-sm)}
+
+  .art{justify-self:center;position:relative}
+  .art svg{width:min(360px,86%);height:auto;image-rendering:pixelated}
+  .art .caption{
+    margin-top:10px;text-align:center;font-family:var(--mono);font-size:12px;color:var(--ink-3);
+  }
+
+  /* ================= 区块通用 ================= */
+  section{padding:44px 0}
+  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:22px;flex-wrap:wrap}
+  .sec-head h2{font-size:24px;margin:0;letter-spacing:.01em}
+  .sec-head p{margin:6px 0 0;font-size:14px;color:var(--ink-2);max-width:52ch}
+  .sec-kicker{
+    font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--ink-3);
+    display:block;margin-bottom:6px;
+  }
+
+  /* ================= 身体状态 ================= */
+  .states{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .state{
+    position:relative;text-align:left;font:inherit;cursor:pointer;
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+    padding:18px;box-shadow:var(--shadow-1);
+    transition:border-color .15s ease,box-shadow .15s ease,transform .08s ease;
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .state:hover{border-color:#CFC4AE;box-shadow:var(--shadow-2)}
+  .state:active{transform:translateY(1px)}
+  .state[aria-pressed="true"]{
+    border-color:var(--leaf);border-width:2px;
+    background:linear-gradient(0deg,var(--leaf-soft),var(--leaf-soft)) padding-box,var(--surface);
+    padding:17px; /* 补回边框增量，避免跳动 */
+  }
+  .state-top{display:flex;align-items:center;gap:10px}
+  .state-top strong{font-size:16px}
+  .state p{margin:0;font-size:14px;color:var(--ink-2)}
+  .meter{height:6px;border-radius:3px;background:var(--surface-2);overflow:hidden}
+  .meter i{display:block;height:100%;background:var(--leaf);border-radius:3px}
+  .state:nth-child(2) .meter i{background:var(--gold)}
+  .state:nth-child(3) .meter i{background:var(--clay)}
+  .state .pick{
+    display:none;align-items:center;gap:6px;
+    font-family:var(--mono);font-size:12px;color:var(--leaf);
+  }
+  .state[aria-pressed="true"] .pick{display:inline-flex}
+
+  /* ================= 忌口 ================= */
+  .diet{background:var(--surface-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .chips{display:flex;flex-wrap:wrap;gap:12px}
+  .chip{
+    position:relative;display:inline-flex;align-items:center;gap:10px;
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+    padding:12px 16px;cursor:pointer;user-select:none;font-size:15px;
+    transition:border-color .15s ease,background .15s ease;
+  }
+  .chip:hover{border-color:#CFC4AE}
+  .chip input{position:absolute;opacity:0;width:1px;height:1px}
+  .chip .box{
+    width:18px;height:18px;border:2px solid #B8AB93;border-radius:3px;background:var(--surface);
+    display:grid;place-items:center;flex:0 0 auto;
+  }
+  .chip .box svg{opacity:0;width:12px;height:12px}
+  .chip input:checked + .box{background:var(--leaf);border-color:var(--leaf)}
+  .chip input:checked + .box svg{opacity:1}
+  .chip:has(input:checked){border-color:var(--leaf);background:var(--leaf-soft)}
+  .chip input:focus-visible + .box{outline:3px solid var(--clay);outline-offset:2px}
+  .diet-meta{
+    display:flex;gap:18px;align-items:center;flex-wrap:wrap;
+    margin-top:16px;font-family:var(--mono);font-size:13px;color:var(--ink-2);
+  }
+  .diet-meta b{color:var(--ink)}
+
+  /* ================= 推荐 ================= */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .dish{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+    box-shadow:var(--shadow-1);display:flex;flex-direction:column;overflow:hidden;
+    transition:box-shadow .15s ease,transform .12s ease;
+  }
+  .dish:hover{box-shadow:var(--shadow-2);transform:translateY(-2px)}
+  .dish-top{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 16px 0}
+  .tag{
+    display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;
+    padding:4px 10px;border-radius:999px;border:1px solid transparent;
+  }
+  .tag--yes{background:var(--leaf-soft);color:#3F5A36;border-color:#CBDCC0}
+  .tag--mid{background:var(--gold-soft);color:#7A5A1E;border-color:#E8D5A8}
+  .tag--no{background:var(--clay-soft);color:#8A4429;border-color:#EBC7B6}
+  .tag .dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+  .kcal{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+  .dish-art{padding:6px 16px 0;display:flex;justify-content:center}
+  .dish-art svg{width:120px;height:120px}
+  .dish-body{padding:8px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
+  .dish-body h3{margin:0;font-size:19px;letter-spacing:.01em}
+  .meta{display:flex;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--ink-2)}
+  .meta span{background:var(--surface-2);border-radius:var(--r-sm);padding:2px 8px}
+  .why{margin:2px 0 0;font-size:14px;color:var(--ink-2);line-height:1.65}
+  .allergen{
+    margin-top:auto;padding-top:10px;border-top:1px dashed var(--line);
+    font-size:12px;color:var(--ink-3);display:flex;gap:6px;align-items:flex-start;
+  }
+  .dish-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 16px 14px}
+  .price{font-family:var(--mono);font-size:15px;font-weight:600}
+
+  /* ================= 记录 ================= */
+  .log{background:var(--surface-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .log-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;box-shadow:var(--shadow-1)}
+  .panel h3{margin:0 0 4px;font-size:17px}
+  .panel .hint{margin:0 0 16px;font-size:13px;color:var(--ink-3)}
+  .row{margin:14px 0}
+  .row .lab{display:flex;justify-content:space-between;font-size:13px;color:var(--ink-2);margin-bottom:6px}
+  .row .lab b{font-family:var(--mono);color:var(--ink)}
+  .track{height:8px;background:var(--surface-2);border-radius:4px;overflow:hidden}
+  .track i{display:block;height:100%;border-radius:4px;background:var(--leaf)}
+  .row:nth-child(4) .track i{background:var(--gold)}
+  .row:nth-child(5) .track i{background:var(--clay)}
+  .days{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:6px}
+  .day{
+    aspect-ratio:1;display:grid;place-items:center;font-family:var(--mono);font-size:12px;
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);
+    color:var(--ink-3);cursor:pointer;transition:border-color .15s,background .15s,color .15s;
+  }
+  .day:hover{border-color:#CFC4AE;color:var(--ink)}
+  .day[aria-pressed="true"]{background:var(--leaf);border-color:var(--leaf);color:#fff}
+  .day[disabled]{cursor:default;background:var(--surface-2);color:#A79C89}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px;font-size:12px;color:var(--ink-3)}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .legend i{width:12px;height:12px;border-radius:3px;border:1px solid var(--line);display:inline-block}
+
+  /* ================= 健康提示 ================= */
+  .notice{
+    display:flex;gap:18px;align-items:flex-start;
+    background:var(--gold-soft);border:1px solid #E8D5A8;border-radius:var(--r-lg);
+    padding:20px 22px;
+  }
+  .notice h3{margin:0 0 6px;font-size:16px}
+  .notice p{margin:0;font-size:14px;color:#5F4A22;line-height:1.7}
+  .notice svg{flex:0 0 auto}
+
+  /* ================= 页脚 ================= */
+  footer{border-top:1px solid var(--line);padding:24px 0 40px;font-size:13px;color:var(--ink-3)}
+  .foot-inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+  /* ================= 响应式 ================= */
+  @media (max-width:960px){
+    .hero-grid{grid-template-columns:1fr;gap:32px}
+    .art{order:-1;justify-self:start}
+    .art svg{width:min(280px,70%)}
+    .cards{grid-template-columns:1fr}
+    .log-grid{grid-template-columns:1fr}
+  }
+  @media (max-width:760px){
+    .nav-links{display:none}
+    .menu-btn{display:inline-flex}
+    .states{grid-template-columns:1fr}
+    section{padding:36px 0}
+    .hero{padding:36px 0 28px}
+    .wrap{padding:0 18px}
+    h1{font-size:28px}
+    .lede{font-size:16px}
+    .actions .btn{flex:1 1 46%}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *{transition:none!important}
+  }
+  @media print{.nav,.menu-btn{display:none}}
+
+  /* ============ 轻任务流 ============ */
+  .progress-card{
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+    padding:12px 16px;margin-top:26px;box-shadow:var(--shadow-1);
+  }
+  .progress-card .lab{font-size:13px;color:var(--ink-2)}
+  .progress-card .lab b{font-family:var(--mono);color:var(--ink);font-size:15px}
+  .seg{display:flex;gap:4px}
+  .seg i{width:14px;height:8px;border-radius:2px;background:var(--surface-2);border:1px solid var(--line);display:block}
+  .seg i.on{background:var(--leaf);border-color:var(--leaf)}
+  .seg i.today{background:var(--gold);border-color:var(--gold)}
+
+  .task-tag{
+    display:inline-flex;align-items:center;gap:6px;margin-left:10px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+    padding:3px 9px;border-radius:999px;border:1px dashed var(--line);
+    color:var(--ink-3);vertical-align:middle;
+  }
+  .task-tag.done{color:var(--leaf);border-color:#CBDCC0;border-style:solid;background:var(--leaf-soft)}
+  .task-tag.todo{color:var(--clay);border-color:#EBC7B6;border-style:solid;background:var(--clay-soft)}
+
+  /* ============ 向导 ============ */
+  .guide{display:flex;align-items:flex-start;gap:10px;margin-top:16px;justify-content:flex-end}
+  .guide .bubble{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+    padding:8px 12px;font-size:13px;color:var(--ink-2);max-width:220px;box-shadow:var(--shadow-1);
+    position:relative;
+  }
+  .guide .bubble::after{
+    content:"";position:absolute;right:-6px;top:14px;width:10px;height:10px;
+    background:var(--surface);border-right:1px solid var(--line);border-top:1px solid var(--line);
+    transform:rotate(45deg);
+  }
+
+  /* ============ 徽章 ============ */
+  .badges{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 18px}
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+    padding:8px 12px;font-size:13px;color:var(--ink-2);
+  }
+  .badge svg{width:18px;height:18px}
+  .badge.on{border-color:#CBDCC0;background:var(--leaf-soft);color:#3F5A36}
+  .badge.gold{border-color:#E8D5A8;background:var(--gold-soft);color:#7A5A1E}
+  .badge .num{font-family:var(--mono);font-weight:700;color:var(--ink)}
+
+  /* ============ 图鉴 ============ */
+  .codex{display:grid;grid-template-columns:repeat(8,1fr);gap:10px}
+  .stamp{
+    aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+    font-size:11px;color:var(--ink-2);position:relative;overflow:hidden;
+  }
+  .stamp svg{width:34px;height:34px}
+  .stamp.locked{background:var(--surface-2);color:#B0A48E}
+  .stamp.locked svg{opacity:.25;filter:grayscale(1)}
+  .stamp.locked::after{content:"待发现";position:absolute;bottom:6px;font-size:10px;color:#B0A48E}
+  .stamp .check{
+    position:absolute;top:5px;right:5px;width:14px;height:14px;border-radius:50%;
+    background:var(--leaf);color:#fff;display:grid;place-items:center;font-size:9px;
+  }
+
+  /* ============ 日历：今日与连续 ============ */
+  .day.today{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold-soft)}
+  .day.today::after{content:"";position:absolute;bottom:3px;left:50%;transform:translateX(-50%);
+    width:4px;height:4px;border-radius:50%;background:var(--gold)}
+  .day{position:relative}
+  .streak{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:12px;color:var(--ink-3)}
+  .streak b{font-family:var(--mono);color:var(--leaf)}
+
+  /* ============ 换菜反馈 ============ */
+  @keyframes flipIn{
+    0%{opacity:.25;transform:rotateY(-8deg) scale(.985)}
+    100%{opacity:1;transform:none}
+  }
+  .flip{animation:flipIn .26s ease-out}
+  .flash{animation:flashPix .32s steps(3)}
+  @keyframes flashPix{
+    0%{box-shadow:0 0 0 0 rgba(94,127,82,.35)}
+    60%{box-shadow:0 0 0 4px rgba(94,127,82,.18)}
+    100%{box-shadow:0 0 0 0 rgba(94,127,82,0)}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .flip,.flash{animation:none}
+  }
+
+  @media (max-width:760px){
+    .codex{grid-template-columns:repeat(4,1fr)}
+    .guide{justify-content:flex-start}
+    .guide .bubble::after{right:auto;left:-6px;transform:rotate(-45deg)}
+    .progress-card{gap:10px}
+  }
+
+  /* ============ 图鉴分类与分页 ============ */
+  .codex-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px}
+  .codex-tabs button{
+    font:inherit;font-size:13px;padding:7px 14px;border-radius:999px;cursor:pointer;
+    background:var(--surface);border:1px solid var(--line);color:var(--ink-2);
+  }
+  .codex-tabs button:hover{border-color:#CFC4AE;color:var(--ink)}
+  .codex-tabs button[aria-pressed="true"]{background:var(--leaf-soft);border-color:#CBDCC0;color:#3F5A36;font-weight:600}
+  .codex-tabs .cnt{font-family:var(--mono);font-size:11px;opacity:.75;margin-left:4px}
+  .codex-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px;flex-wrap:wrap}
+  .pager{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+  .pager button{
+    width:34px;height:34px;border-radius:6px;border:1px solid var(--line);background:var(--surface);
+    cursor:pointer;font:inherit;color:var(--ink-2);
+  }
+  .pager button:hover{border-color:#CFC4AE;color:var(--ink)}
+  .pager button[disabled]{opacity:.4;cursor:not-allowed}
+  @media (max-width:760px){ .codex-tabs button{font-size:12px;padding:6px 11px} }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">跳到主要内容</a>
+
+<!-- ============ 导航 ============ -->
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top" aria-label="知源食养 首页">
+      <svg viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">
+        <rect x="2" y="7" width="12" height="2" fill="#3B3227"/>
+        <rect x="3" y="9" width="10" height="4" fill="#E7D9BE"/>
+        <rect x="4" y="6" width="8" height="2" fill="#B9643F"/>
+        <rect x="5" y="4" width="2" height="2" fill="#5E7F52"/>
+        <rect x="9" y="3" width="2" height="2" fill="#5E7F52"/>
+      </svg>
+      知源食养
+    </a>
+    <nav class="nav-links" aria-label="主导航">
+      <a href="#states" aria-current="true">体质参考</a>
+      <a href="#diet">忌口设置</a>
+      <a href="#today">今日推荐</a>
+      <a href="#log">饮食记录</a>
+    </nav>
+    <button class="menu-btn" type="button" id="menuBtn" aria-expanded="false" aria-controls="mobileMenu">
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><rect y="3" width="16" height="2" fill="currentColor"/><rect y="7" width="16" height="2" fill="currentColor"/><rect y="11" width="16" height="2" fill="currentColor"/></svg>
+      菜单
+    </button>
+  </div>
+  <nav class="menu" id="mobileMenu" aria-label="移动端导航">
+    <a href="#states">体质参考</a>
+    <a href="#diet">忌口设置</a>
+    <a href="#today">今日推荐</a>
+    <a href="#log">饮食记录</a>
+  </nav>
+</header>
+
+<main id="main">
+<!-- ============ 首屏 ============ -->
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">日常食养参考</span>
+      <h1>今天吃什么，<br/>先看看身体感受</h1>
+      <p class="lede">
+        根据你最近两周的状态，从食堂菜品里挑出更合适的那几道。
+        每条建议都附带食材与依据，仅作日常饮食参考。
+      </p>
+      <div class="actions">
+        <a class="btn btn--primary" href="#states">开始选择</a>
+        <a class="btn btn--ghost" href="#today">查看今日推荐</a>
+      </div>
+
+      <div class="progress-card">
+        <span class="lab">本周记录 <b>5</b> / 14 天</span>
+        <span class="seg" aria-hidden="true">
+          <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i>
+          <i class="today"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </span>
+        <span class="lab" style="margin-left:auto">今日任务：<b>记录晚饭</b></span>
+      </div>
+    </div>
+
+    <div class="art">
+      <svg viewBox="0 0 64 64" shape-rendering="crispEdges" role="img" aria-label="一碗冒着热气的汤面插画">
+        <rect x="6" y="52" width="52" height="3" fill="#E7D9BE"/>
+        <rect x="10" y="34" width="44" height="3" fill="#3B3227"/>
+        <rect x="10" y="37" width="44" height="15" fill="#FFFDF8"/>
+        <rect x="8" y="34" width="2" height="18" fill="#3B3227"/>
+        <rect x="54" y="34" width="2" height="18" fill="#3B3227"/>
+        <rect x="10" y="51" width="44" height="2" fill="#3B3227"/>
+        <rect x="14" y="30" width="36" height="5" fill="#E0A17C"/>
+        <rect x="14" y="28" width="36" height="2" fill="#C9875F"/>
+        <rect x="18" y="31" width="5" height="3" fill="#F3E2BE"/>
+        <rect x="27" y="31" width="6" height="3" fill="#F3E2BE"/>
+        <rect x="37" y="31" width="5" height="3" fill="#F3E2BE"/>
+        <rect x="22" y="33" width="6" height="3" fill="#FFFDF8"/>
+        <rect x="24" y="34" width="2" height="2" fill="#C8973F"/>
+        <rect x="38" y="32" width="7" height="3" fill="#5E7F52"/>
+        <rect x="40" y="30" width="3" height="2" fill="#4E6B44"/>
+        <rect x="46" y="18" width="2" height="16" fill="#B9643F"/>
+        <rect x="50" y="16" width="2" height="18" fill="#B9643F"/>
+        <rect x="24" y="20" width="3" height="3" fill="#FFFDF8" opacity=".85"/>
+        <rect x="27" y="16" width="3" height="3" fill="#FFFDF8" opacity=".6"/>
+        <rect x="36" y="22" width="3" height="3" fill="#FFFDF8" opacity=".7"/>
+        <rect x="39" y="18" width="3" height="3" fill="#FFFDF8" opacity=".5"/>
+      </svg>
+      <p class="caption">一碗热的，比什么建议都实在</p>
+      <div class="guide">
+        <div class="bubble">先选一下最近的身体感受，我帮你挑几道。</div>
+        <svg width="46" height="46" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">
+          <rect x="4" y="3" width="8" height="7" fill="#E7D9BE"/>
+          <rect x="5" y="4" width="2" height="2" fill="#3B3227"/>
+          <rect x="9" y="4" width="2" height="2" fill="#3B3227"/>
+          <rect x="7" y="7" width="2" height="1" fill="#B9643F"/>
+          <rect x="5" y="10" width="6" height="3" fill="#5E7F52"/>
+          <rect x="4" y="2" width="8" height="1" fill="#5E7F52"/>
+          <rect x="7" y="1" width="2" height="1" fill="#C8973F"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 身体状态 ============ -->
+<section id="states">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="sec-kicker">STEP 01</span>
+        <h2>最近两周，你更像哪种状态？<span class="task-tag done">✓ 已完成</span></h2>
+        <p>按最近的实际感受选，可以多选。这些只是饮食参考的起点，不是诊断。</p>
+      </div>
+    </div>
+
+    <div class="states" role="group" aria-label="身体状态选择">
+      <button class="state" type="button" aria-pressed="true" data-state="tired">
+        <span class="state-top">
+          <svg width="28" height="28" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">
+            <rect x="5" y="2" width="6" height="2" fill="#5E7F52"/>
+            <rect x="4" y="4" width="8" height="6" fill="#E7D9BE"/>
+            <rect x="6" y="6" width="1" height="2" fill="#3B3227"/>
+            <rect x="9" y="6" width="1" height="2" fill="#3B3227"/>
+            <rect x="4" y="11" width="8" height="3" fill="#5E7F52"/>
+          </svg>
+          <strong>容易疲倦</strong>
+        </span>
+        <p>睡够了也不解乏，下午三四点最沉。</p>
+        <div class="meter" aria-hidden="true"><i style="width:78%"></i></div>
+        <span class="muted" style="font-size:12px;color:var(--ink-3)">近两周出现 5 天以上</span>
+        <span class="pick">
+          <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M1 6l3 3 7-7" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          已选择
+        </span>
+      </button>
+
+      <button class="state" type="button" aria-pressed="false" data-state="dry">
+        <span class="state-top">
+          <svg width="28" height="28" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">
+            <rect x="7" y="2" width="2" height="3" fill="#C8973F"/>
+            <rect x="5" y="5" width="6" height="3" fill="#C8973F"/>
+            <rect x="4" y="8" width="8" height="5" fill="#F7ECD5"/>
+            <rect x="6" y="10" width="4" height="1" fill="#8A6A24"/>
+          </svg>
+          <strong>容易口干</strong>
+        </span>
+        <p>总觉得想喝水，嘴里发黏或发苦。</p>
+        <div class="meter" aria-hidden="true"><i style="width:52%"></i></div>
+        <span style="font-size:12px;color:var(--ink-3)">近两周出现 3 天以上</span>
+        <span class="pick">
+          <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M1 6l3 3 7-7" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          已选择
+        </span>
+      </button>
+
+      <button class="state" type="button" aria-pressed="false" data-state="heavy">
+        <span class="state-top">
+          <svg width="28" height="28" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">
+            <rect x="3" y="4" width="10" height="2" fill="#B9643F"/>
+            <rect x="4" y="6" width="8" height="6" fill="#F6E3D8"/>
+            <rect x="6" y="8" width="4" height="2" fill="#B9643F"/>
+          </svg>
+          <strong>消化负担较重</strong>
+        </span>
+        <p>饭后容易胀，油腻的吃不下太多。</p>
+        <div class="meter" aria-hidden="true"><i style="width:64%"></i></div>
+        <span style="font-size:12px;color:var(--ink-3)">近两周出现 4 天以上</span>
+        <span class="pick">
+          <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M1 6l3 3 7-7" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          已选择
+        </span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 忌口 ============ -->
+<section class="diet" id="diet">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="sec-kicker">STEP 02</span>
+        <h2>忌口与饮食偏好<span class="task-tag done">✓ 已完成</span></h2>
+        <p>可以多选，也可以什么都不选。选中的会直接从推荐里排除不符合的菜。</p>
+      </div>
+    </div>
+
+    <div class="chips" role="group" aria-label="忌口选项">
+      <label class="chip">
+        <input type="checkbox" name="diet" value="纯素">
+        <span class="box" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M1 6l3 3 7-7" fill="none" stroke="#fff" stroke-width="2"/></svg></span>
+        纯素
+      </label>
+      <label class="chip">
+        <input type="checkbox" name="diet" value="蛋奶素">
+        <span class="box" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M1 6l3 3 7-7" fill="none" stroke="#fff" stroke-width="2"/></svg></span>
+        蛋奶素
+      </label>
+      <label class="chip">
+        <input type="checkbox" name="diet" value="不吃辣" checked>
+        <span class="box" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M1 6l3 3 7-7" fill="none" stroke="#fff" stroke-width="2"/></svg></span>
+        不吃辣
+      </label>
+      <label class="chip">
+        <input type="checkbox" name="diet" value="无麸质">
+        <span class="box" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M1 6l3 3 7-7" fill="none" stroke="#fff" stroke-width="2"/></svg></span>
+        无麸质
+      </label>
+      <label class="chip">
+        <input type="checkbox" name="diet" value="不吃苦味">
+        <span class="box" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M1 6l3 3 7-7" fill="none" stroke="#fff" stroke-width="2"/></svg></span>
+        不吃苦味
+      </label>
+    </div>
+
+    <p class="diet-meta" aria-live="polite">
+      已选 <b id="dietCount">1</b> 项
+      <span>·</span>
+      当前范围：<b>全部档口</b>
+      <span>·</span>
+      筛选后候选 <b id="dishCount">124</b> 道
+    </p>
+  </div>
+</section>
+
+<!-- ============ 推荐 ============ -->
+<section id="today">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="sec-kicker">STEP 03</span>
+        <h2>今日食养推荐<span class="task-tag todo">待选择</span></h2>
+        <p>只给三道，避免选择过载。每道都写清为什么、含什么、大概多少热量。</p>
+      </div>
+      <button class="btn btn--ghost btn--sm" type="button" id="reroll">换一批</button>
+    </div>
+
+    <div class="cards" id="cards">
+      <!-- 推荐 -->
+      <article class="dish">
+        <div class="dish-top">
+          <span class="tag tag--yes"><span class="dot" aria-hidden="true"></span>推荐</span>
+          <span class="kcal">约 210 千卡</span>
+        </div>
+        <div class="dish-art">
+          <svg viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">
+            <rect x="2" y="8" width="12" height="2" fill="#3B3227"/>
+            <rect x="3" y="10" width="10" height="4" fill="#FFFDF8"/>
+            <rect x="4" y="7" width="8" height="2" fill="#E0A17C"/>
+            <rect x="5" y="5" width="2" height="2" fill="#5E7F52"/>
+            <rect x="9" y="5" width="2" height="2" fill="#5E7F52"/>
+            <rect x="7" y="3" width="2" height="2" fill="#C8973F"/>
+            <rect x="7" y="1" width="1" height="2" fill="#FFFDF8"/>
+          </svg>
+        </div>
+        <div class="dish-body">
+          <h3>山药鸡汤</h3>
+          <div class="meta"><span>山药 · 鸡腿肉</span><span>清淡</span><span>温性</span></div>
+          <p class="why">山药帮助增加饱腹感，汤水温润；适合近期容易疲倦、想吃点热的人。</p>
+          <p class="allergen">
+            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="6" fill="none" stroke="currentColor"/><rect x="6.5" y="3.5" width="1" height="4" fill="currentColor"/><rect x="6.5" y="9" width="1" height="1" fill="currentColor"/></svg>
+            含禽肉；不含麸质、乳制品
+          </p>
+        </div>
+        <div class="dish-foot">
+          <span class="price">￥14</span>
+          <button class="btn btn--ghost btn--sm" type="button" data-swap>换一道</button>
+        </div>
+      </article>
+
+      <!-- 推荐 -->
+      <article class="dish">
+        <div class="dish-top">
+          <span class="tag tag--yes"><span class="dot" aria-hidden="true"></span>推荐</span>
+          <span class="kcal">约 320 千卡</span>
+        </div>
+        <div class="dish-art">
+          <svg viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">
+            <rect x="2" y="9" width="12" height="2" fill="#3B3227"/>
+            <rect x="3" y="11" width="10" height="3" fill="#FFFDF8"/>
+            <rect x="4" y="8" width="8" height="2" fill="#F3E2BE"/>
+            <rect x="5" y="6" width="6" height="2" fill="#E0A17C"/>
+            <rect x="6" y="4" width="2" height="2" fill="#5E7F52"/>
+            <rect x="9" y="5" width="2" height="2" fill="#5E7F52"/>
+          </svg>
+        </div>
+        <div class="dish-body">
+          <h3>五谷渔粉</h3>
+          <div class="meta"><span>米粉 · 鱼片</span><span>鲜香</span><span>平性</span></div>
+          <p class="why">汤底温润、米粉好消化，适合饭量小又想吃得热乎的时候。</p>
+          <p class="allergen">
+            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="6" fill="none" stroke="currentColor"/><rect x="6.5" y="3.5" width="1" height="4" fill="currentColor"/><rect x="6.5" y="9" width="1" height="1" fill="currentColor"/></svg>
+            含鱼类；可能含花生碎
+          </p>
+        </div>
+        <div class="dish-foot">
+          <span class="price">￥14</span>
+          <button class="btn btn--ghost btn--sm" type="button" data-swap>换一道</button>
+        </div>
+      </article>
+
+      <!-- 适量 -->
+      <article class="dish">
+        <div class="dish-top">
+          <span class="tag tag--mid"><span class="dot" aria-hidden="true"></span>适量</span>
+          <span class="kcal">约 520 千卡</span>
+        </div>
+        <div class="dish-art">
+          <svg viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">
+            <rect x="2" y="7" width="12" height="2" fill="#3B3227"/>
+            <rect x="3" y="9" width="10" height="4" fill="#F7ECD5"/>
+            <rect x="4" y="6" width="8" height="2" fill="#B9643F"/>
+            <rect x="5" y="4" width="2" height="2" fill="#C8973F"/>
+            <rect x="9" y="4" width="2" height="2" fill="#C8973F"/>
+            <rect x="7" y="2" width="2" height="2" fill="#FFFDF8"/>
+          </svg>
+        </div>
+        <div class="dish-body">
+          <h3>黄焖鸡米饭</h3>
+          <div class="meta"><span>鸡腿肉 · 米饭</span><span>咸鲜</span><span>偏温</span></div>
+          <p class="why">鸡肉顶饱，但汤汁油偏多。想吃得满足可以选，建议配一份青菜。</p>
+          <p class="allergen">
+            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="6" fill="none" stroke="currentColor"/><rect x="6.5" y="3.5" width="1" height="4" fill="currentColor"/><rect x="6.5" y="9" width="1" height="1" fill="currentColor"/></svg>
+            含禽肉、大豆酱油；油脂较高
+          </p>
+        </div>
+        <div class="dish-foot">
+          <span class="price">￥14</span>
+          <button class="btn btn--ghost btn--sm" type="button" data-swap>换一道</button>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ 本周发现 ============ -->
+<section id="codex" style="background:var(--surface-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="sec-kicker">COLLECTION</span>
+        <h2>本周发现<span class="task-tag">4 / 8 已收集</span></h2>
+        <p>吃过或看过食材就会点亮一个。只是记录你的探索，不代表任何评价。</p>
+      </div>
+    </div>
+
+    <div class="codex-tabs" role="group" aria-label="图鉴分类">
+      <button type="button" aria-pressed="true">全部<span class="cnt">4/8</span></button>
+      <button type="button" aria-pressed="false">谷物<span class="cnt">2/3</span></button>
+      <button type="button" aria-pressed="false">蔬菜<span class="cnt">1/3</span></button>
+      <button type="button" aria-pressed="false">肉蛋<span class="cnt">1/2</span></button>
+      <button type="button" aria-pressed="false">果品<span class="cnt">0/1</span></button>
+    </div>
+
+    <div class="codex">
+      <div class="stamp"><span class="check">✓</span>
+        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">
+          <rect x="5" y="3" width="6" height="2" fill="#5E7F52"/><rect x="4" y="5" width="8" height="7" fill="#E7D9BE"/>
+          <rect x="6" y="7" width="4" height="3" fill="#C8973F"/>
+        </svg>山药</div>
+      <div class="stamp"><span class="check">✓</span>
+        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">
+          <rect x="3" y="6" width="10" height="2" fill="#C8973F"/><rect x="4" y="8" width="8" height="4" fill="#F7ECD5"/>
+          <rect x="5" y="4" width="1" height="2" fill="#C8973F"/><rect x="8" y="3" width="1" height="3" fill="#C8973F"/>
+        </svg>小米</div>
+      <div class="stamp"><span class="check">✓</span>
+        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">
+          <rect x="3" y="8" width="10" height="4" fill="#F6E3D8"/><rect x="5" y="6" width="6" height="2" fill="#B9643F"/>
+          <rect x="7" y="4" width="2" height="2" fill="#B9643F"/>
+        </svg>鸡肉</div>
+      <div class="stamp"><span class="check">✓</span>
+        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">
+          <rect x="7" y="3" width="2" height="7" fill="#4E6B44"/><rect x="4" y="6" width="8" height="3" fill="#5E7F52"/>
+        </svg>青菜</div>
+      <div class="stamp locked">
+        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">
+          <rect x="3" y="6" width="10" height="6" fill="#FFFDF8"/><rect x="5" y="4" width="6" height="2" fill="#FFFDF8"/>
+        </svg></div>
+      <div class="stamp locked">
+        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">
+          <rect x="4" y="5" width="8" height="6" fill="#FFFDF8"/>
+        </svg></div>
+      <div class="stamp locked">
+        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">
+          <rect x="3" y="7" width="10" height="5" fill="#FFFDF8"/>
+        </svg></div>
+      <div class="stamp locked">
+        <svg viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">
+          <rect x="6" y="4" width="4" height="8" fill="#FFFDF8"/>
+        </svg></div>
+    </div>
+
+    <div class="codex-foot">
+      <span class="muted" style="font-size:12px;color:var(--ink-3)">当前：全部 · 第 1 页，共 3 页</span>
+      <div class="pager" role="group" aria-label="图鉴分页">
+        <button type="button" disabled aria-label="上一页">‹</button>
+        <span>1 / 3</span>
+        <button type="button" aria-label="下一页">›</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 记录 ============ -->
+<section class="log" id="log">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="sec-kicker">STEP 04</span>
+        <h2>接下来两周，记三件事<span class="task-tag todo">今日未记录</span></h2>
+        <p>吃饭后的感受，一天一记。记录只存在本机，不关联身份，也不作为诊断依据。</p>
+      </div>
+    </div>
+
+    <div class="log-grid">
+      <div class="panel">
+        <h3>近 7 天感受</h3>
+        <p class="hint">数字是你自己打勾的天数</p>
+        <div class="row">
+          <div class="lab"><span>饭后舒适</span><b>5 / 7 天</b></div>
+          <div class="track"><i style="width:71%"></i></div>
+        </div>
+        <div class="row">
+          <div class="lab"><span>排便规律</span><b>4 / 7 天</b></div>
+          <div class="track"><i style="width:57%"></i></div>
+        </div>
+        <div class="row">
+          <div class="lab"><span>下午精力</span><b>3 / 7 天</b></div>
+          <div class="track"><i style="width:43%"></i></div>
+        </div>
+      </div>
+
+      <div class="badges">
+        <span class="badge on">
+          <svg viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><rect x="3" y="7" width="3" height="6" fill="#5E7F52"/><rect x="7" y="4" width="3" height="9" fill="#5E7F52"/><rect x="11" y="2" width="2" height="11" fill="#5E7F52"/></svg>
+          连续记录 <span class="num">3</span> 天
+        </span>
+        <span class="badge on">
+          <svg viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><rect x="3" y="3" width="10" height="10" fill="#E7D9BE"/><rect x="5" y="7" width="2" height="3" fill="#5E7F52"/><rect x="8" y="5" width="2" height="5" fill="#5E7F52"/></svg>
+          完成今日选择
+        </span>
+        <span class="badge gold">
+          <svg viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><rect x="7" y="2" width="2" height="2" fill="#C8973F"/><rect x="5" y="4" width="6" height="3" fill="#C8973F"/><rect x="3" y="7" width="10" height="2" fill="#C8973F"/></svg>
+          发现新菜品 <span class="num">2</span> 个
+        </span>
+      </div>
+
+      <div class="panel">
+        <h3>14 天日历</h3>
+        <p class="hint">点一下就算当天记过；灰色是还没到</p>
+        <div class="days" role="group" aria-label="14 天打卡">
+          <button class="day" type="button" aria-pressed="true">1</button>
+          <button class="day" type="button" aria-pressed="true">2</button>
+          <button class="day" type="button" aria-pressed="true">3</button>
+          <button class="day" type="button" aria-pressed="true">4</button>
+          <button class="day" type="button" aria-pressed="true">5</button>
+          <button class="day today" type="button" aria-pressed="false">6</button>
+          <button class="day" type="button" aria-pressed="false">7</button>
+          <button class="day" type="button" aria-pressed="false">8</button>
+          <button class="day" type="button" aria-pressed="false">9</button>
+          <button class="day" type="button" aria-pressed="false">10</button>
+          <button class="day" type="button" aria-pressed="false">11</button>
+          <button class="day" type="button" aria-pressed="false">12</button>
+          <button class="day" type="button" aria-pressed="false">13</button>
+          <button class="day" type="button" aria-pressed="false">14</button>
+        </div>
+        <p class="streak">🔥 已连续记录 <b>3</b> 天，今天记完就是第 4 天</p>
+        <div class="legend">
+          <span><i style="background:var(--leaf);border-color:var(--leaf)"></i>已记录</span>
+          <span><i></i>未记录</span>
+          <span><i style="background:var(--surface-2)"></i>尚未到</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 健康提示 ============ -->
+<section id="notice">
+  <div class="wrap">
+    <div class="notice">
+      <svg width="36" height="36" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">
+        <rect x="3" y="2" width="10" height="11" fill="#FFFDF8"/>
+        <rect x="3" y="2" width="10" height="1" fill="#3B3227"/>
+        <rect x="3" y="12" width="10" height="1" fill="#3B3227"/>
+        <rect x="3" y="2" width="1" height="11" fill="#3B3227"/>
+        <rect x="12" y="2" width="1" height="11" fill="#3B3227"/>
+        <rect x="5" y="5" width="1" height="1" fill="#B9643F"/>
+        <rect x="7" y="5" width="1" height="1" fill="#B9643F"/>
+        <rect x="9" y="5" width="1" height="1" fill="#B9643F"/>
+      </svg>
+      <div>
+        <h3>这是一份饮食参考，不是诊断</h3>
+        <p>
+          本系统只根据你填写的状态，从菜品里做饮食搭配参考，<strong>不用于诊断、开方，也不替代医生</strong>。
+          如果出现持续不适、明显症状或过敏反应，请及时就医，不要依赖这里的建议。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <span>知源食养 · 日常食养参考</span>
+    <span>沙河校区 · 数据 321 条 · 规则 19 条</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- 移动端菜单 ---------- */
+  var menuBtn = document.getElementById("menuBtn");
+  var menu = document.getElementById("mobileMenu");
+  if (menuBtn && menu) {
+    menuBtn.addEventListener("click", function () {
+      var open = menu.getAttribute("data-open") === "true";
+      menu.setAttribute("data-open", open ? "false" : "true");
+      menuBtn.setAttribute("aria-expanded", open ? "false" : "true");
+    });
+    menu.addEventListener("click", function (e) {
+      if (e.target.tagName === "A") {
+        menu.setAttribute("data-open", "false");
+        menuBtn.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+
+  /* ---------- 状态多选（按钮型，天然可键盘触发） ---------- */
+  var states = document.querySelectorAll(".state");
+  states.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var on = btn.getAttribute("aria-pressed") === "true";
+      btn.setAttribute("aria-pressed", on ? "false" : "true");
+      updateCounts();
+    });
+  });
+
+  /* ---------- 忌口计数 ---------- */
+  var boxes = document.querySelectorAll('input[name="diet"]');
+  var dietCount = document.getElementById("dietCount");
+  var dishCount = document.getElementById("dishCount");
+  function updateCounts() {
+    var n = 0;
+    boxes.forEach(function (b) { if (b.checked) { n += 1; } });
+    if (dietCount) { dietCount.textContent = String(n); }
+    if (dishCount) { dishCount.textContent = String(Math.max(48, 124 - n * 18)); }
+  }
+  boxes.forEach(function (b) { b.addEventListener("change", updateCounts); });
+  updateCounts();
+
+  /* ---------- 换一批（翻牌 + 短暂高亮） ---------- */
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var cards = document.getElementById("cards");
+  var reroll = document.getElementById("reroll");
+  if (cards && reroll) {
+    reroll.addEventListener("click", function () {
+      var list = Array.prototype.slice.call(cards.children);
+      list.sort(function () { return Math.random() - 0.5; });
+      list.forEach(function (el) { cards.appendChild(el); });
+      if (!reduce) {
+        list.forEach(function (el, i) {
+          el.classList.remove("flip");
+          window.setTimeout(function () { el.classList.add("flip"); }, i * 40);
+        });
+      }
+    });
+  }
+
+  /* ---------- 换一道（占位反馈） ---------- */
+  document.querySelectorAll("[data-swap]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      if (btn.disabled) { return; }
+      var old = btn.textContent;
+      btn.textContent = "已换";
+      btn.disabled = true;
+      var cardEl = btn.closest(".dish");
+      if (cardEl && !reduce) {
+        cardEl.classList.remove("flash");
+        window.setTimeout(function () { cardEl.classList.add("flash"); }, 10);
+      }
+      window.setTimeout(function () {
+        btn.textContent = old;
+        btn.disabled = false;
+      }, 900);
+    });
+  });
+
+  /* ---------- 图鉴分类与分页 ---------- */
+  var codexTabs = document.querySelectorAll(".codex-tabs button");
+  codexTabs.forEach(function (b) {
+    b.addEventListener("click", function () {
+      codexTabs.forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
+      b.setAttribute("aria-pressed", "true");
+    });
+  });
+
+  /* ---------- 日历打卡 ---------- */
+  document.querySelectorAll(".day").forEach(function (day) {
+    day.addEventListener("click", function () {
+      var on = day.getAttribute("aria-pressed") === "true";
+      day.setAttribute("aria-pressed", on ? "false" : "true");
+    });
+  });
+})();
+</script>
+</body>
+</html>
