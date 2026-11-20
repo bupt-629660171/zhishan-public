@@ -23,6 +23,7 @@ except ImportError:
 
 import streamlit as st
 
+import constitution_quiz
 import rule_engine as engine
 import ui_theme
 from version import DISCLAIMER, RULE_VERSION
@@ -126,6 +127,7 @@ st.markdown(
         streak=_streak(),
         task_done=st.session_state["plan_today"],
         rule_version=RULE_VERSION,
+        step=int(st.session_state.get("wizard_step", 1)),
     ),
     unsafe_allow_html=True,
 )
@@ -223,82 +225,115 @@ plan_tab, checkin_tab, query_tab, feedback_tab, about_tab = st.tabs(
 
 
 with plan_tab:
-    st.markdown(ui_theme.step("STEP 01", "最近两周，你更像哪种状态？"), unsafe_allow_html=True)
-    st.markdown(
-        '<p class="step-sub">按最近的实际感受选，可以多选。这只是饮食参考的起点，不是诊断。</p>',
-        unsafe_allow_html=True,
-    )
-    st.caption("选择近期较常出现的表现。问卷仅供食养辅助参考，不是医学诊断。")
-    qi = st.pills(
-        "气虚倾向表现（可多选）",
-        ["容易疲劳", "气短懒言", "容易感冒", "活动后易出汗", "食欲较弱", "说话乏力"],
-        selection_mode="multi",
-        key="qi_pills",
-    ) or []
-    damp = st.pills(
-        "湿热倾向表现（可多选）",
-        ["面部易出油", "口苦或口黏", "身体困重", "大便黏滞", "容易长痘", "小便颜色偏黄"],
-        selection_mode="multi",
-        key="damp_pills",
-    ) or []
-    if len(qi) == len(damp):
-        suggested = "气虚"
-        st.info(f"问卷分数相同（气虚 {len(qi)}，湿热 {len(damp)}），暂不能区分，请结合自身情况确认。")
-    else:
-        suggested = "气虚" if len(qi) > len(damp) else "湿热"
-        st.caption(f"问卷倾向：气虚 {len(qi)} 分，湿热 {len(damp)} 分。")
+    _step = int(st.session_state.get("wizard_step", 1))
 
-    if "selected_constitution" not in st.session_state:
-        st.session_state["selected_constitution"] = suggested
-    if len(qi) != len(damp) and st.button("采用问卷倾向", use_container_width=True):
-        st.session_state["selected_constitution"] = suggested
+    if _step == 1:
+        st.markdown(ui_theme.step("STEP 01", "最近两周，你更像哪种状态？"), unsafe_allow_html=True)
+        st.markdown(
+            '<p class="step-sub">按最近的实际感受选，可以多选。这只是饮食参考的起点，不是诊断。</p>',
+            unsafe_allow_html=True,
+        )
+        st.caption("下面 11 道题用于判断倾向，约 1 分钟。结果只作饮食参考，不是诊断。")
+        with st.expander("🧭 体质倾向自评（11 题，可跳过）", expanded=False):
+            _answers: dict[str, str] = {}
+            for _q in constitution_quiz.QUESTIONS:
+                _answers[_q["id"]] = st.segmented_control(
+                    _q["text"],
+                    constitution_quiz.LEVELS,
+                    default="没有",
+                    key=f"quiz_{_q['id']}",
+                ) or "没有"
+            _scores = constitution_quiz.score(_answers)
+            _result = constitution_quiz.classify(_scores)
+            st.markdown(f"**{constitution_quiz.result_text(_result)}**")
+            st.caption(
+                f"已回答 {constitution_quiz.answered(_answers)} / "
+                f"{len(constitution_quiz.QUESTIONS)} 题 · 简化自评，非标准量表"
+            )
 
-    constitution = st.segmented_control(
-        "本次采用体质（可手动调整）",
-        list(engine.SUPPORTED_CONSTITUTIONS),
-        key="selected_constitution",
-        default=st.session_state.get("selected_constitution", suggested),
-    ) or st.session_state.get("selected_constitution", suggested)
-    emotion = st.segmented_control(
-        "情志自评", ["平和", "思", "怒", "忧", "喜"], default="平和", key="emotion_seg"
-    ) or "平和"
-    st.markdown(ui_theme.step("STEP 02", "忌口与饮食偏好"), unsafe_allow_html=True)
-    constraints = st.pills(
-        "饮食限制（点一下选中，再点取消）",
-        ["素食", "蛋奶素", "无麸质", "不吃苦味", "不吃辣"],
-        selection_mode="multi",
-        key="constraint_pills",
-        help="素食=纯素（含蛋奶也排除）；蛋奶素只排除肉类，保留蛋奶。",
-    ) or []
+        suggested = _result["type"] if _result["supported"] else None
 
-    import sqlite3 as _sq
+        if "selected_constitution" not in st.session_state:
+            st.session_state["selected_constitution"] = suggested or "气虚"
 
-    with _sq.connect(engine.DATABASE_PATH) as _c:
-        _campuses = [r[0] for r in _c.execute("SELECT DISTINCT campus FROM Dish_Source ORDER BY campus")]
-    _campus_options = ["全部"] + _campuses
-    if len(_campus_options) <= 6:
-        _campus_choice = st.segmented_control(
-            "食堂范围", _campus_options, default="全部", key="campus_seg"
-        ) or "全部"
-    else:
-        _campus_choice = st.selectbox("食堂范围", _campus_options, index=0)
-    campus = None if _campus_choice == "全部" else _campus_choice
+        if suggested and st.button(f"采用自评倾向：{suggested}", use_container_width=True):
+            st.session_state["selected_constitution"] = suggested
+
+        if suggested is None:
+            st.info(
+                "自评结果不在当前支持范围（气虚 / 湿热）。可以手动选一个最接近的，"
+                "或按通用原则少油少盐；有明显不适请咨询专业人士。"
+            )
+
+        constitution = st.segmented_control(
+            "本次采用体质（可手动调整）",
+            list(engine.SUPPORTED_CONSTITUTIONS),
+            key="selected_constitution",
+            default=st.session_state.get("selected_constitution", suggested),
+        ) or st.session_state.get("selected_constitution", suggested)
+        emotion = st.segmented_control(
+            "情志自评", ["平和", "思", "怒", "忧", "喜"], default="平和", key="emotion_seg"
+        ) or "平和"
+        if st.button("下一步：设置忌口 →", use_container_width=True, type="primary"):
+            st.session_state["wizard_step"] = 2
+            st.rerun()
+
+    elif _step == 2:
+        st.markdown(ui_theme.step("STEP 02", "忌口与饮食偏好"), unsafe_allow_html=True)
+        constraints = st.pills(
+            "饮食限制（点一下选中，再点取消）",
+            ["素食", "蛋奶素", "无麸质", "不吃苦味", "不吃辣"],
+            selection_mode="multi",
+            key="constraint_pills",
+            help="素食=纯素（含蛋奶也排除）；蛋奶素只排除肉类，保留蛋奶。",
+        ) or []
+
+        import sqlite3 as _sq
+
+        with _sq.connect(engine.DATABASE_PATH) as _c:
+            _campuses = [r[0] for r in _c.execute("SELECT DISTINCT campus FROM Dish_Source ORDER BY campus")]
+        _campus_options = ["全部"] + _campuses
+        if len(_campus_options) <= 6:
+            _campus_choice = st.segmented_control(
+                "食堂范围", _campus_options, default="全部", key="campus_seg"
+            ) or "全部"
+        else:
+            _campus_choice = st.selectbox("食堂范围", _campus_options, index=0)
+        campus = None if _campus_choice == "全部" else _campus_choice
+
+        _b1, _b2 = st.columns([1, 2])
+        if _b1.button("← 上一步", use_container_width=True):
+            st.session_state["wizard_step"] = 1
+            st.rerun()
+        if _b2.button("生成今日方案 →", use_container_width=True, type="primary"):
+            st.session_state["wizard_step"] = 3
+            st.rerun()
+
+    constitution = st.session_state.get("selected_constitution", "气虚")
+    emotion = st.session_state.get("emotion_seg", "平和")
+    constraints = st.session_state.get("constraint_pills", []) or []
+    _campus_now = st.session_state.get("campus_seg", "全部")
+    campus = None if _campus_now == "全部" else _campus_now
     signature = (constitution, emotion, tuple(sorted(constraints)))
 
-    if st.button("✨ 生成今日调养方案", use_container_width=True, type="primary"):
-        st.session_state.pop("diet_plan", None)
-        if has_ai_access and mode == "共享额度（免费）":
-            st.session_state["shared_ai_calls"] = _used + 1
-        with st.expander("🧭 生成过程透明度", expanded=True):
-            area = st.container()
-            result = generate_diet_plan(
-                constitution, emotion, constraints, has_ai_access, campus=campus,
-                api_key=api_key, base_url=base_url, model=model,
-                progress_callback=make_progress_callback(area),
-            )
-        st.session_state["diet_plan"] = result
-        st.session_state["plan_today"] = True
-        st.session_state["diet_plan_signature"] = signature
+    if _step == 3:
+        if st.button("← 回到忌口", use_container_width=False):
+            st.session_state["wizard_step"] = 2
+            st.rerun()
+
+        if st.session_state.get("diet_plan_signature") != signature:
+            if has_ai_access and mode == "共享额度（免费）":
+                st.session_state["shared_ai_calls"] = _used + 1
+            with st.expander("🧭 生成过程透明度", expanded=True):
+                area = st.container()
+                _r = generate_diet_plan(
+                    constitution, emotion, constraints, has_ai_access, campus=campus,
+                    api_key=api_key, base_url=base_url, model=model,
+                    progress_callback=make_progress_callback(area),
+                )
+            st.session_state["diet_plan"] = _r
+            st.session_state["diet_plan_signature"] = signature
+            st.session_state["plan_today"] = True
 
     result = (
         st.session_state.get("diet_plan")

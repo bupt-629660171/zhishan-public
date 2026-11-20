@@ -179,6 +179,8 @@ def css() -> str:
     .quest-node {{ padding:.65rem .75rem; border-left:2px solid var(--line); color:var(--ink2); font-size:.75rem; }}
     .quest-node b {{ display:block; color:var(--ink); font-size:.84rem; margin-bottom:.1rem; }}
     .quest-node.on {{ border-left-color:var(--leaf); background:linear-gradient(90deg,var(--leaf-soft),transparent); }}
+    .quest-node.current {{ border-left-color:var(--clay); background:linear-gradient(90deg,var(--clay-soft),transparent); }}
+    .quest-node.current b {{ color:var(--clay); }}
     @keyframes float {{ 50% {{ transform:translateY(-12px) rotate(-1deg); }} }}
     @keyframes orbit {{ to {{ transform:rotate(360deg); }} }}
     @keyframes steam {{ to {{ transform:translateY(-28px); opacity:0; }} }}
@@ -193,7 +195,7 @@ def css() -> str:
     """
 
 
-def hero(recorded: int, streak: int, task_done: bool, rule_version: str) -> str:
+def hero(recorded: int, streak: int, task_done: bool, rule_version: str, step: int = 1) -> str:
     done_text = "今日方案已解锁" if task_done else "今日方案待探索"
     done_cls = "on" if task_done else ""
     return f"""
@@ -220,8 +222,8 @@ def hero(recorded: int, streak: int, task_done: bool, rule_version: str) -> str:
       </div>
     </section>
     <div class="quest-dock">
-      <div class="quest-node on"><b>01 感受扫描</b>选择最近两周的状态</div>
-      <div class="quest-node on"><b>02 边界装备</b>装入忌口与饮食偏好</div>
+      <div class="quest-node {"on" if step > 1 else "current"}"><b>01 感受扫描</b>选择最近两周的状态</div>
+      <div class="quest-node {"on" if step > 2 else ("current" if step == 2 else "")}"><b>02 边界装备</b>装入忌口与饮食偏好</div>
       <div class="quest-node {done_cls}"><b>03 今日掉落</b>{done_text}</div>
       <div class="quest-node {"on" if recorded else ""}"><b>04 两周图鉴</b>记录感受，点亮发现</div>
     </div>
