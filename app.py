@@ -229,14 +229,18 @@ with plan_tab:
         unsafe_allow_html=True,
     )
     st.caption("选择近期较常出现的表现。问卷仅供食养辅助参考，不是医学诊断。")
-    qi = st.multiselect(
-        "气虚倾向表现",
+    qi = st.pills(
+        "气虚倾向表现（可多选）",
         ["容易疲劳", "气短懒言", "容易感冒", "活动后易出汗", "食欲较弱", "说话乏力"],
-    )
-    damp = st.multiselect(
-        "湿热倾向表现",
+        selection_mode="multi",
+        key="qi_pills",
+    ) or []
+    damp = st.pills(
+        "湿热倾向表现（可多选）",
         ["面部易出油", "口苦或口黏", "身体困重", "大便黏滞", "容易长痘", "小便颜色偏黄"],
-    )
+        selection_mode="multi",
+        key="damp_pills",
+    ) or []
     if len(qi) == len(damp):
         suggested = "气虚"
         st.info(f"问卷分数相同（气虚 {len(qi)}，湿热 {len(damp)}），暂不能区分，请结合自身情况确认。")
@@ -249,21 +253,35 @@ with plan_tab:
     if len(qi) != len(damp) and st.button("采用问卷倾向", use_container_width=True):
         st.session_state["selected_constitution"] = suggested
 
-    constitution = st.selectbox(
-        "本次采用体质（可手动调整）", list(engine.SUPPORTED_CONSTITUTIONS), key="selected_constitution"
-    )
-    emotion = st.selectbox("情志自评", ["平和", "思", "怒", "忧", "喜"])
+    constitution = st.segmented_control(
+        "本次采用体质（可手动调整）",
+        list(engine.SUPPORTED_CONSTITUTIONS),
+        key="selected_constitution",
+        default=st.session_state.get("selected_constitution", suggested),
+    ) or st.session_state.get("selected_constitution", suggested)
+    emotion = st.segmented_control(
+        "情志自评", ["平和", "思", "怒", "忧", "喜"], default="平和", key="emotion_seg"
+    ) or "平和"
     st.markdown(ui_theme.step("STEP 02", "忌口与饮食偏好"), unsafe_allow_html=True)
-    constraints = st.multiselect(
-        "饮食限制", ["素食", "蛋奶素", "无麸质", "不吃苦味", "不吃辣"],
+    constraints = st.pills(
+        "饮食限制（点一下选中，再点取消）",
+        ["素食", "蛋奶素", "无麸质", "不吃苦味", "不吃辣"],
+        selection_mode="multi",
+        key="constraint_pills",
         help="素食=纯素（含蛋奶也排除）；蛋奶素只排除肉类，保留蛋奶。",
-    )
+    ) or []
 
     import sqlite3 as _sq
 
     with _sq.connect(engine.DATABASE_PATH) as _c:
         _campuses = [r[0] for r in _c.execute("SELECT DISTINCT campus FROM Dish_Source ORDER BY campus")]
-    _campus_choice = st.selectbox("食堂范围", ["全部"] + _campuses, index=0)
+    _campus_options = ["全部"] + _campuses
+    if len(_campus_options) <= 6:
+        _campus_choice = st.segmented_control(
+            "食堂范围", _campus_options, default="全部", key="campus_seg"
+        ) or "全部"
+    else:
+        _campus_choice = st.selectbox("食堂范围", _campus_options, index=0)
     campus = None if _campus_choice == "全部" else _campus_choice
     signature = (constitution, emotion, tuple(sorted(constraints)))
 
@@ -492,7 +510,9 @@ with query_tab:
     st.caption("支持：香锅、黄焖鸡、拉面、甜的。单字查询会先让你确认具体菜品，不再瞎匹配。")
     c1, c2 = st.columns([1, 2])
     with c1:
-        q_constitution = st.selectbox("查询体质", list(engine.SUPPORTED_CONSTITUTIONS), key="query_constitution")
+        q_constitution = st.segmented_control(
+            "查询体质", list(engine.SUPPORTED_CONSTITUTIONS), key="query_constitution"
+        ) or list(engine.SUPPORTED_CONSTITUTIONS)[0]
     with c2:
         dish_input = st.text_input("想查询什么菜？", placeholder="例如：我想吃香锅 / 来点甜的")
     q_signature = (q_constitution, dish_input.strip())
