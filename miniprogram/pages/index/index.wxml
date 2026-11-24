@@ -1,9 +1,41 @@
 <view class="wrap">
-  <view class="brand">知源食养</view>
-  <view class="tagline">今天吃什么，先看看身体感受</view>
 
+  <!-- 首屏 -->
+  <view class="hero">
+    <view class="bowl">
+      <view
+        wx:for="{{bowl}}"
+        wx:key="id"
+        style="left:{{item.x}}rpx;top:{{item.y}}rpx;width:{{item.w}}rpx;height:{{item.h}}rpx;background:{{item.c}}"
+      ></view>
+      <view class="steam" style="right:70rpx;top:16rpx"></view>
+      <view class="steam" style="right:44rpx;top:4rpx;animation-delay:.8s"></view>
+    </view>
+
+    <view class="hero-kicker">ZHIYUAN · DAILY FOOD</view>
+    <view class="hero-title">今天吃什么，<br/>先看看身体感受</view>
+    <view class="hero-desc">从最近两周的真实感受出发，在食堂里挑出更合适的那一餐。每条建议都带规则出处。</view>
+  </view>
+
+  <!-- 本周进度 -->
+  <view class="progress">
+    <view class="lab">本周记录 <text>{{recorded}}</text> / 14 天</view>
+    <view class="seg">
+      <view wx:for="{{segs}}" wx:key="id" class="{{item.on ? 'on' : (item.today ? 'today' : '')}}"></view>
+    </view>
+  </view>
+
+  <!-- 任务节点 -->
+  <view class="quest">
+    <view wx:for="{{quest}}" wx:key="t" class="node {{item.cls}}">
+      <view class="t">{{item.t}}</view>
+      <view class="s">{{item.s}}</view>
+    </view>
+  </view>
+
+  <!-- 状态 -->
   <view class="section-title">你的状态更接近</view>
-  <view class="section-sub">只作饮食参考，不构成诊断</view>
+  <view class="section-sub">只作饮食参考，不构成诊断 · 规则版本 {{ruleVersion}}</view>
   <view class="chips">
     <view
       wx:for="{{constitutions}}"
@@ -13,7 +45,7 @@
       bindtap="pickConstitution"
     >{{item.name}}</view>
   </view>
-  <view class="section-sub" style="margin-top:16rpx">{{pickedDesc}}</view>
+  <view class="section-sub" style="margin-top:14rpx">{{pickedDesc}}</view>
 
   <view class="card" style="display:flex;align-items:center;justify-content:space-between">
     <view>
@@ -23,6 +55,7 @@
     <view class="chip on" bindtap="openQuiz">开始自评</view>
   </view>
 
+  <!-- 忌口 -->
   <view class="section-title">忌口与偏好</view>
   <view class="section-sub">可多选，点一下选中，再点取消</view>
   <view class="chips">
@@ -35,6 +68,7 @@
     >{{item.name}}</view>
   </view>
 
+  <!-- 校区 -->
   <view class="section-title">食堂范围</view>
   <view class="chips">
     <view

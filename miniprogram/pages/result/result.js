@@ -21,6 +21,7 @@ Page({
     // 先解码再判断"全部"，否则编码串永远不等于"全部"，会被当成校区名去筛
     const raw = query.campus ? decodeURIComponent(query.campus) : '全部';
     this.campus = raw === '全部' ? null : raw;
+    app.planDone = true;
     this.refresh();
   },
 
