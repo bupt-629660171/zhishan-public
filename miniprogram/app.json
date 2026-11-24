@@ -1,0 +1,17 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/quiz/quiz",
+    "pages/result/result",
+    "pages/record/record"
+  ],
+  "window": {
+    "navigationBarTitleText": "知源食养",
+    "navigationBarBackgroundColor": "#FAF6EE",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#FAF6EE"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

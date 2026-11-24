@@ -1,0 +1,125 @@
+/* 知源食养 · 全局样式（暖白 + 草绿 + 陶土橙） */
+page {
+  background: #FAF6EE;
+  color: #2B251E;
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 30rpx;
+  line-height: 1.7;
+}
+
+.wrap {
+  padding: 32rpx 32rpx 120rpx;
+}
+
+.brand {
+  font-size: 40rpx;
+  font-weight: 700;
+  letter-spacing: 2rpx;
+}
+
+.tagline {
+  color: #6B6152;
+  font-size: 26rpx;
+  margin-top: 8rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  margin: 40rpx 0 16rpx;
+}
+
+.section-sub {
+  color: #8C8171;
+  font-size: 24rpx;
+  margin-bottom: 16rpx;
+}
+
+.card {
+  background: #FFFDF8;
+  border: 2rpx solid #E4DBC9;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+}
+
+/* 芯片 */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.chip {
+  padding: 14rpx 28rpx;
+  border-radius: 999rpx;
+  border: 2rpx solid #E4DBC9;
+  background: #FFFDF8;
+  color: #6B6152;
+  font-size: 28rpx;
+}
+
+.chip.on {
+  background: #E7EEDF;
+  border-color: #CBDCC0;
+  color: #3F5A36;
+  font-weight: 600;
+}
+
+/* 判定徽章：图标 + 文字 + 底色，三重编码 */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx 16rpx;
+  border-radius: 999rpx;
+  font-size: 22rpx;
+  font-weight: 600;
+}
+
+.badge-yi {
+  background: #E7EEDF;
+  color: #3F5A36;
+  border: 2rpx solid #CBDCC0;
+}
+
+.badge-shen {
+  background: #F7ECD5;
+  color: #7A5A1E;
+  border: 2rpx solid #E8D5A8;
+}
+
+.badge-jin {
+  background: #F6E3D8;
+  color: #8A4429;
+  border: 2rpx solid #EBC7B6;
+}
+
+/* 主按钮 */
+.btn {
+  height: 96rpx;
+  line-height: 96rpx;
+  border-radius: 12rpx;
+  background: #5E7F52;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: 600;
+  margin-top: 32rpx;
+}
+
+.btn.ghost {
+  background: #FFFDF8;
+  color: #6B6152;
+  border: 2rpx solid #E4DBC9;
+}
+
+.btn.disabled {
+  background: #C9C2B4;
+}
+
+.note {
+  color: #8C8171;
+  font-size: 22rpx;
+  margin-top: 24rpx;
+  line-height: 1.6;
+}
