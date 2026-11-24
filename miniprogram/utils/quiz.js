@@ -40,10 +40,10 @@ function classify(scores) {
   var top = ranked[0] || { type: '', score: 0 };
 
   if (scores['平和'] >= 60 && ranked.every(function (r) { return r.score < 30; })) {
-    return { type: '平和', level: '较平稳', supported: false, note: '各方面比较平稳，按日常均衡饮食即可。' };
+    return { type: '平和', level: '较平稳', supported: false, also: [], note: '各方面比较平稳，按日常均衡饮食即可。' };
   }
   if (top.score < 30) {
-    return { type: '不明显', level: '不明显', supported: false, note: '没有明显倾向，按日常均衡饮食即可。' };
+    return { type: '不明显', level: '不明显', supported: false, also: [], note: '没有明显倾向，按日常均衡饮食即可。' };
   }
 
   var supported = quizData.supported.indexOf(top.type) >= 0;

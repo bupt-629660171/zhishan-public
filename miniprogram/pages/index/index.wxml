@@ -27,23 +27,23 @@
   <view class="section-sub">可多选，点一下选中，再点取消</view>
   <view class="chips">
     <view
-      wx:for="{{constraints}}"
-      wx:key="*this"
-      class="chip {{selected.indexOf(item) >= 0 ? 'on' : ''}}"
-      data-name="{{item}}"
+      wx:for="{{constraintList}}"
+      wx:key="name"
+      class="chip {{item.on ? 'on' : ''}}"
+      data-name="{{item.name}}"
       bindtap="toggleConstraint"
-    >{{item}}</view>
+    >{{item.name}}</view>
   </view>
 
   <view class="section-title">食堂范围</view>
   <view class="chips">
     <view
       wx:for="{{campusList}}"
-      wx:key="*this"
-      class="chip {{campus === item ? 'on' : ''}}"
-      data-name="{{item}}"
+      wx:key="name"
+      class="chip {{item.on ? 'on' : ''}}"
+      data-name="{{item.name}}"
       bindtap="pickCampus"
-    >{{item}}</view>
+    >{{item.name}}</view>
   </view>
 
   <view class="btn" bindtap="generate">生成今日推荐</view>
