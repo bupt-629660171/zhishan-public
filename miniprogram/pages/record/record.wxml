@@ -1,0 +1,32 @@
+<view class="wrap">
+  <view class="brand">两周记录</view>
+  <view class="tagline">已连续记录 {{streak}} 天 · 数据只存在本机</view>
+
+  <view class="chips" style="margin-top:24rpx">
+    <view class="chip {{streak > 0 ? 'on' : ''}}">连续 {{streak}} 天</view>
+    <view class="chip {{checkedCount > 0 ? 'on' : ''}}">已记 {{checkedCount}} / 14</view>
+    <view class="chip {{todayChecked ? 'on' : ''}}">{{todayChecked ? '今日已记' : '今日待记'}}</view>
+  </view>
+
+  <view wx:for="{{days}}" wx:key="day" class="card">
+    <view style="display:flex;justify-content:space-between;align-items:center">
+      <view style="font-weight:700">第 {{item.day}} 天<block wx:if="{{item.today}}"> · 今天</block></view>
+      <view wx:if="{{item.checked}}" class="badge badge-yi">✓ 已记</view>
+    </view>
+    <view class="chips" style="margin-top:16rpx">
+      <view
+        wx:for="{{items}}"
+        wx:for-item="it"
+        wx:key="key"
+        class="chip {{item.rec[it.key] ? 'on' : ''}}"
+        data-day="{{item.day}}"
+        data-item="{{it.key}}"
+        bindtap="toggleItem"
+      >{{it.label}}</view>
+    </view>
+  </view>
+
+  <view class="note">
+    只记感受，不做诊断，也不生成健康评分。有明显不适请及时就医。
+  </view>
+</view>

@@ -1,0 +1,48 @@
+<view class="wrap">
+  <block wx:if="{{!done}}">
+    <view class="brand">体质倾向自评</view>
+    <view class="tagline">第 {{index + 1}} / {{total}} 题 · 约 1 分钟 · 只作饮食参考</view>
+
+    <view style="height:8rpx;background:#F5EFE2;border-radius:4rpx;margin:24rpx 0">
+      <view style="height:8rpx;width:{{percent}}%;background:#5E7F52;border-radius:4rpx"></view>
+    </view>
+
+    <view class="card">
+      <view style="font-size:34rpx;font-weight:700;line-height:1.6">{{question.text}}</view>
+    </view>
+
+    <view class="chips">
+      <view
+        wx:for="{{levels}}"
+        wx:key="*this"
+        class="chip {{picked === item ? 'on' : ''}}"
+        data-level="{{item}}"
+        bindtap="pickLevel"
+      >{{item}}</view>
+    </view>
+
+    <view style="display:flex;gap:16rpx">
+      <view class="btn ghost" style="flex:1;margin-top:32rpx" bindtap="goPrev">上一题</view>
+      <view class="btn" style="flex:2" bindtap="goNext">{{index + 1 === total ? '看结果' : '下一题'}}</view>
+    </view>
+  </block>
+
+  <block wx:else>
+    <view class="brand">自评结果</view>
+    <view class="card" style="margin-top:24rpx">
+      <view style="font-size:38rpx;font-weight:700">{{result.type}}</view>
+      <view class="badge {{result.supported ? 'badge-yi' : 'badge-shen'}}" style="margin-top:12rpx">
+        {{result.level}}<block wx:if="{{result.score}}"> · 参考分 {{result.score}}</block>
+      </view>
+      <view style="margin-top:16rpx;color:#6B6152">{{result.note}}</view>
+      <view wx:if="{{result.also.length}}" style="margin-top:12rpx;color:#8C8171;font-size:24rpx">
+        同时 {{result.also}} 也偏高，属混合倾向
+      </view>
+    </view>
+
+    <view class="btn" bindtap="adopt" wx:if="{{canAdopt}}">采用这个结果</view>
+    <view class="btn ghost" bindtap="restart">重新测一次</view>
+
+    <view class="note">这是自评倾向，不是诊断。结果只用于挑选菜品参考，如有持续不适请咨询专业人士。</view>
+  </block>
+</view>

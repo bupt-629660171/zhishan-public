@@ -1,0 +1,56 @@
+<view class="wrap">
+  <view class="brand">知源食养</view>
+  <view class="tagline">今天吃什么，先看看身体感受</view>
+
+  <view class="section-title">你的状态更接近</view>
+  <view class="section-sub">只作饮食参考，不构成诊断</view>
+  <view class="chips">
+    <view
+      wx:for="{{constitutions}}"
+      wx:key="name"
+      class="chip {{picked === item.name ? 'on' : ''}}"
+      data-name="{{item.name}}"
+      bindtap="pickConstitution"
+    >{{item.name}}</view>
+  </view>
+  <view class="section-sub" style="margin-top:16rpx">{{pickedDesc}}</view>
+
+  <view class="card" style="display:flex;align-items:center;justify-content:space-between">
+    <view>
+      <view style="font-weight:700">不确定选哪个？</view>
+      <view style="color:#8C8171;font-size:24rpx">11 道题，约 1 分钟，给出倾向参考</view>
+    </view>
+    <view class="chip on" bindtap="openQuiz">开始自评</view>
+  </view>
+
+  <view class="section-title">忌口与偏好</view>
+  <view class="section-sub">可多选，点一下选中，再点取消</view>
+  <view class="chips">
+    <view
+      wx:for="{{constraints}}"
+      wx:key="*this"
+      class="chip {{selected.indexOf(item) >= 0 ? 'on' : ''}}"
+      data-name="{{item}}"
+      bindtap="toggleConstraint"
+    >{{item}}</view>
+  </view>
+
+  <view class="section-title">食堂范围</view>
+  <view class="chips">
+    <view
+      wx:for="{{campusList}}"
+      wx:key="*this"
+      class="chip {{campus === item ? 'on' : ''}}"
+      data-name="{{item}}"
+      bindtap="pickCampus"
+    >{{item}}</view>
+  </view>
+
+  <view class="btn" bindtap="generate">生成今日推荐</view>
+  <view class="btn ghost" bindtap="openRecord">两周记录</view>
+
+  <view class="note">
+    本小程序只做日常饮食参考，不用于诊断、开方，也不替代医生。
+    如有持续不适或过敏，请及时就医。数据全部在本机，不联网、不上传。
+  </view>
+</view>

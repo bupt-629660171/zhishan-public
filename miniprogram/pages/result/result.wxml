@@ -1,0 +1,43 @@
+<view class="wrap">
+  <view class="brand">今日推荐</view>
+  <view class="tagline">{{constitution}} · 已排除 {{blocked}} 道 · 可选 {{remaining}} 道</view>
+
+  <view wx:if="{{empty}}" class="card">
+    <view>{{message}}</view>
+  </view>
+
+  <view wx:for="{{cards}}" wx:key="name" class="card">
+    <view style="display:flex;justify-content:space-between;align-items:center">
+      <view style="font-size:34rpx;font-weight:700">{{item.name}}</view>
+      <view class="badge {{item.badge.cls}}">{{item.badge.text}}</view>
+    </view>
+
+    <view style="color:#6B6152;font-size:24rpx;margin-top:8rpx">
+      {{item.property}}<block wx:if="{{item.calories}}"> · 约 {{item.calories}} 千卡</block>
+    </view>
+
+    <view style="margin-top:12rpx">{{item.rationale}}</view>
+
+    <view wx:if="{{item.place}}" style="color:#8C8171;font-size:24rpx;margin-top:8rpx">
+      📍 {{item.place}}<block wx:if="{{item.price}}">（￥{{item.price}}）</block>
+    </view>
+
+    <view
+      wx:if="{{item.evidence.length}}"
+      style="color:#5E7F52;font-size:24rpx;margin-top:12rpx"
+      data-index="{{index}}"
+      bindtap="toggleEvidence"
+    >规则依据 {{item.showEvidence ? '▲' : '▼'}}</view>
+
+    <view wx:if="{{item.showEvidence}}" style="margin-top:8rpx">
+      <view wx:for="{{item.evidence}}" wx:for-item="ev" wx:key="*this" style="color:#6B6152;font-size:22rpx">
+        · {{ev}}
+      </view>
+    </view>
+  </view>
+
+  <view class="btn" bindtap="reroll">换一批</view>
+  <view class="btn ghost" bindtap="back">返回修改条件</view>
+
+  <view class="note">判定由本地规则完成，模型只负责解释。结果仅作饮食参考，不构成诊断。</view>
+</view>
