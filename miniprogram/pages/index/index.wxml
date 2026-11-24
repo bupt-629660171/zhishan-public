@@ -1,6 +1,6 @@
 <view class="wrap">
 
-  <!-- 首屏 -->
+  <!-- 首屏：深绿 -->
   <view class="hero">
     <view class="bowl">
       <view
@@ -9,14 +9,20 @@
         class="px"
         style="left:{{item.x}}rpx;top:{{item.y}}rpx;width:{{item.w}}rpx;height:{{item.h}}rpx;background:{{item.c}}"
       ></view>
-      <view class="steam" style="left:60rpx;top:-16rpx"></view>
-      <view class="steam" style="left:96rpx;top:-30rpx;animation-delay:.9s"></view>
+      <view class="steam" style="left:56rpx;top:-18rpx"></view>
+      <view class="steam" style="left:92rpx;top:-32rpx;animation-delay:.9s"></view>
     </view>
 
     <view class="hero-copy">
-      <view class="hero-kicker">ZHIYUAN · DAILY FOOD</view>
-      <view class="hero-title">今天吃什么，<br/>先看看身体感受</view>
-      <view class="hero-desc">从最近两周的真实感受出发，挑出更合适的那一餐，每条建议都带规则出处。</view>
+      <view class="hero-kicker">ZHĪYUÁN · DAILY FOOD QUEST</view>
+      <view class="hero-title">身体会说话，<text class="accent">一餐来回应。</text></view>
+      <view class="hero-desc">从最近两周的真实感受出发，在校园食堂里发现更合适的一餐。</view>
+    </view>
+
+    <view class="hero-chips">
+      <view class="hc">本周记录 <text>{{recorded}}/14</text></view>
+      <view class="hc">连续探索 <text>{{streak}} 天</text></view>
+      <view class="hc">规则版本 <text>{{ruleVersion}}</text></view>
     </view>
   </view>
 

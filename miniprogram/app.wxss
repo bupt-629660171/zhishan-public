@@ -1,4 +1,4 @@
-/* 知源食养 · 全局样式（对齐网页 v3） */
+/* 知源食养 · 全局样式（对齐网页 v3：深绿首屏 + 暖白正文） */
 page {
   background: #FAF6EE;
   color: #2B251E;
@@ -8,54 +8,95 @@ page {
 }
 
 .wrap {
-  padding: 24rpx 28rpx 120rpx;
+  padding: 20rpx 24rpx 120rpx;
 }
 
-/* ---------- 首屏 ---------- */
+/* ---------- 首屏：深绿 ---------- */
 .hero {
   position: relative;
-  background: #FFFDF8;
-  border: 2rpx solid #E4DBC9;
   border-radius: 24rpx;
-  padding: 30rpx 28rpx 26rpx;
+  padding: 34rpx 30rpx 26rpx;
   overflow: hidden;
-  min-height: 300rpx;
+  background: linear-gradient(135deg, #1E3A2B 0%, #2A4635 55%, #33513C 100%);
+  box-shadow: 0 8rpx 24rpx rgba(30, 58, 43, 0.25);
+}
+
+/* 细网格纹理 */
+.hero::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255, 253, 248, 0.05) 0, rgba(255, 253, 248, 0.05) 1rpx, transparent 1rpx, transparent 44rpx),
+    repeating-linear-gradient(90deg, rgba(255, 253, 248, 0.05) 0, rgba(255, 253, 248, 0.05) 1rpx, transparent 1rpx, transparent 44rpx);
+  pointer-events: none;
 }
 
 .hero-copy {
-  /* 给右侧像素碗留出位置，避免文字压上去 */
-  padding-right: 200rpx;
   position: relative;
-  z-index: 2;
+  z-index: 3;
+  padding-right: 224rpx;
 }
 
 .hero-kicker {
-  font-size: 18rpx;
-  letter-spacing: 3rpx;
-  color: #B9643F;
-  margin-bottom: 10rpx;
+  font-size: 17rpx;
+  letter-spacing: 4rpx;
+  color: #E0AE4F;
+  margin-bottom: 14rpx;
 }
 
 .hero-title {
-  font-size: 44rpx;
+  font-size: 46rpx;
   line-height: 1.35;
   font-weight: 700;
-  margin-bottom: 12rpx;
+  color: #FFFDF8;
+  margin-bottom: 16rpx;
+}
+
+.hero-title .accent {
+  color: #E8B44E;
 }
 
 .hero-desc {
-  font-size: 24rpx;
-  color: #6B6152;
+  font-size: 23rpx;
+  color: rgba(255, 253, 248, 0.72);
+  line-height: 1.65;
 }
 
-/* 像素碗：20rpx 方块拼绘 */
+/* 首屏数据芯片 */
+.hero-chips {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: 26rpx;
+}
+
+.hero-chips .hc {
+  border: 2rpx solid rgba(224, 174, 79, 0.45);
+  border-radius: 999rpx;
+  padding: 6rpx 20rpx;
+  font-size: 21rpx;
+  color: rgba(255, 253, 248, 0.82);
+}
+
+.hero-chips .hc text {
+  color: #E8B44E;
+  font-weight: 700;
+}
+
+/* 像素碗：20rpx 方块 */
 .bowl {
   position: absolute;
-  right: 16rpx;
-  top: 44rpx;
+  right: 10rpx;
+  top: 40rpx;
   width: 216rpx;
   height: 240rpx;
-  z-index: 1;
+  z-index: 2;
 }
 
 .bowl .px {
@@ -67,16 +108,55 @@ page {
   position: absolute;
   width: 12rpx;
   height: 12rpx;
-  background: #FFFFFF;
-  border: 2rpx solid #E4DBC9;
-  opacity: .9;
-  animation: rise 3s steps(4) infinite;
+  background: rgba(255, 253, 248, 0.85);
+  animation: rise 3.2s steps(4) infinite;
 }
 
 @keyframes rise {
   0% { opacity: 0; transform: translateY(0); }
-  30% { opacity: 1; }
-  100% { opacity: 0; transform: translateY(-36rpx); }
+  30% { opacity: .9; }
+  100% { opacity: 0; transform: translateY(-40rpx); }
+}
+
+/* ---------- 任务节点 ---------- */
+.quest {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rpx;
+  margin-top: 18rpx;
+  border-radius: 16rpx;
+  overflow: hidden;
+  border: 2rpx solid #E4DBC9;
+  background: #E4DBC9;
+}
+
+.quest .node {
+  padding: 16rpx 18rpx;
+  background: #FFFDF8;
+  border-left: 4rpx solid #E4DBC9;
+}
+
+.quest .node.done {
+  border-left-color: #5E7F52;
+  background: #F4F8EF;
+}
+
+.quest .node.current {
+  border-left-color: #B9643F;
+  background: #FBF0E9;
+}
+
+.quest .node .t {
+  font-size: 25rpx;
+  font-weight: 700;
+}
+
+.quest .node.done .t { color: #5E7F52; }
+.quest .node.current .t { color: #B9643F; }
+
+.quest .node .s {
+  font-size: 21rpx;
+  color: #8C8171;
 }
 
 /* ---------- 进度条 ---------- */
@@ -123,46 +203,6 @@ page {
 .seg .s.today {
   background: #C8973F;
   border-color: #C8973F;
-}
-
-/* ---------- 任务节点 ---------- */
-.quest {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rpx;
-  margin-top: 16rpx;
-  border-radius: 16rpx;
-  overflow: hidden;
-  border: 2rpx solid #E4DBC9;
-}
-
-.quest .node {
-  padding: 14rpx 16rpx;
-  background: #FFFDF8;
-  border-left: 4rpx solid #E4DBC9;
-}
-
-.quest .node.done {
-  border-left-color: #5E7F52;
-  background: #F4F8EF;
-}
-
-.quest .node.current {
-  border-left-color: #B9643F;
-  background: #FBF0E9;
-}
-
-.quest .node .t {
-  font-size: 24rpx;
-  font-weight: 700;
-}
-
-.quest .node.done .t { color: #5E7F52; }
-.quest .node.current .t { color: #B9643F; }
-
-.quest .node .s {
-  font-size: 20rpx;
-  color: #8C8171;
 }
 
 /* ---------- 通用 ---------- */
@@ -222,7 +262,7 @@ page {
   font-weight: 600;
 }
 
-/* 判定徽章：图标 + 文字 + 底色 */
+/* 判定徽章 */
 .badge {
   display: inline-flex;
   align-items: center;

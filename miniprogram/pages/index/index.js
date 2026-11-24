@@ -18,21 +18,28 @@ function buildBowl() {
     rects.push({ id: rects.length, x: x * U, y: y * U, w: w * U, h: h * U, c: c });
   };
 
-  add(1, 10, 9, 1, '#EADFC8');   // 桌面投影
-  add(8, 0, 1, 5, '#B9643F');    // 筷子
-  add(9, 0, 1, 6, '#B9643F');
+  const INK = "#10241A";        // 深色描边，压在深绿底上仍清晰
+  const BODY = "#F5E7C8";       // 米色碗身
+  const SOUP = "#DFA07A";
+  const CREAM = "#F3E0B8";
+  const GREEN = "#6E9A5E";
+  const CLAY = "#C4694E";
 
-  add(2, 6, 7, 1, '#E0A17C');    // 汤面
-  add(3, 6, 2, 1, '#FFFDF8');    // 蛋
-  add(3, 6, 1, 1, '#E8B44E');    // 蛋黄
-  add(5, 6, 1, 1, '#F5E6C4');    // 面条
-  add(6, 6, 2, 1, '#5E7F52');    // 青菜
+  add(1, 10, 9, 1, "rgba(0,0,0,0.22)");  // 投影
+  add(8, 0, 1, 5, CLAY);                 // 筷子
+  add(9, 0, 1, 6, CLAY);
 
-  add(1, 5, 9, 1, '#3B3227');    // 碗沿
-  add(1, 6, 1, 3, '#3B3227');    // 左壁
-  add(9, 6, 1, 3, '#3B3227');    // 右壁
-  add(2, 6, 7, 3, '#F3E8D2');    // 碗身填充
-  add(2, 9, 7, 1, '#3B3227');    // 碗底
+  add(2, 6, 7, 1, SOUP);                 // 汤面
+  add(3, 6, 2, 1, "#FFFDF8");            // 蛋
+  add(3, 6, 1, 1, "#E8B44E");            // 蛋黄
+  add(5, 6, 1, 1, CREAM);                // 面条
+  add(6, 6, 2, 1, GREEN);                // 青菜
+
+  add(1, 5, 9, 1, INK);                  // 碗沿
+  add(1, 6, 1, 3, INK);                  // 左壁
+  add(9, 6, 1, 3, INK);                  // 右壁
+  add(2, 6, 7, 3, BODY);                 // 碗身
+  add(2, 9, 7, 1, INK);                  // 碗底
 
   return rects;
 }
