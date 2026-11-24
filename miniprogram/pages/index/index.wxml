@@ -6,22 +6,25 @@
       <view
         wx:for="{{bowl}}"
         wx:key="id"
+        class="px"
         style="left:{{item.x}}rpx;top:{{item.y}}rpx;width:{{item.w}}rpx;height:{{item.h}}rpx;background:{{item.c}}"
       ></view>
-      <view class="steam" style="right:70rpx;top:16rpx"></view>
-      <view class="steam" style="right:44rpx;top:4rpx;animation-delay:.8s"></view>
+      <view class="steam" style="left:60rpx;top:-16rpx"></view>
+      <view class="steam" style="left:96rpx;top:-30rpx;animation-delay:.9s"></view>
     </view>
 
-    <view class="hero-kicker">ZHIYUAN · DAILY FOOD</view>
-    <view class="hero-title">今天吃什么，<br/>先看看身体感受</view>
-    <view class="hero-desc">从最近两周的真实感受出发，在食堂里挑出更合适的那一餐。每条建议都带规则出处。</view>
+    <view class="hero-copy">
+      <view class="hero-kicker">ZHIYUAN · DAILY FOOD</view>
+      <view class="hero-title">今天吃什么，<br/>先看看身体感受</view>
+      <view class="hero-desc">从最近两周的真实感受出发，挑出更合适的那一餐，每条建议都带规则出处。</view>
+    </view>
   </view>
 
   <!-- 本周进度 -->
   <view class="progress">
     <view class="lab">本周记录 <text>{{recorded}}</text> / 14 天</view>
     <view class="seg">
-      <view wx:for="{{segs}}" wx:key="id" class="{{item.on ? 'on' : (item.today ? 'today' : '')}}"></view>
+      <view wx:for="{{segs}}" wx:key="id" class="s {{item.on ? 'on' : (item.today ? 'today' : '')}}"></view>
     </view>
   </view>
 

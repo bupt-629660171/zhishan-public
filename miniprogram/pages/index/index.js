@@ -7,26 +7,32 @@ const CONSTITUTIONS = [
 
 const CONSTRAINT_NAMES = ['素食', '蛋奶素', '无麸质', '不吃苦味', '不吃辣'];
 
-// 像素碗：用 20rpx 的方块拼出来（WXML 不支持内联 SVG）
+/**
+ * 像素碗：每个方块 20rpx。
+ * 关键：碗身用米色填充，否则白底上看不见，只剩边框像四条腿。
+ */
 function buildBowl() {
   const U = 20;
   const rects = [];
-  const add = (x, y, w, h, c) => rects.push({ id: rects.length, x: x * U, y: y * U, w: w * U, h: h * U, c: c });
+  const add = function (x, y, w, h, c) {
+    rects.push({ id: rects.length, x: x * U, y: y * U, w: w * U, h: h * U, c: c });
+  };
 
-  add(1, 12, 8, 1, '#EADFC8');           // 桌面阴影
-  add(9, 1, 1, 7, '#B9643F');            // 筷子
-  add(10, 0, 1, 8, '#B9643F');
-  add(2, 5, 6, 1, '#E0A17C');            // 汤面
-  add(3, 5, 1, 1, '#F5E6C4');            // 面条
-  add(5, 5, 1, 1, '#F5E6C4');
-  add(4, 6, 2, 1, '#FFFDF8');            // 蛋
-  add(4, 6, 1, 1, '#E8B44E');
-  add(7, 5, 1, 1, '#5E7F52');            // 青菜
-  add(1, 7, 8, 1, '#3B3227');            // 碗沿
-  add(1, 8, 1, 3, '#3B3227');            // 左壁
-  add(8, 8, 1, 3, '#3B3227');            // 右壁
-  add(2, 8, 6, 3, '#FFFDF8');            // 碗身
-  add(3, 11, 4, 1, '#3B3227');           // 碗底
+  add(1, 10, 9, 1, '#EADFC8');   // 桌面投影
+  add(8, 0, 1, 5, '#B9643F');    // 筷子
+  add(9, 0, 1, 6, '#B9643F');
+
+  add(2, 6, 7, 1, '#E0A17C');    // 汤面
+  add(3, 6, 2, 1, '#FFFDF8');    // 蛋
+  add(3, 6, 1, 1, '#E8B44E');    // 蛋黄
+  add(5, 6, 1, 1, '#F5E6C4');    // 面条
+  add(6, 6, 2, 1, '#5E7F52');    // 青菜
+
+  add(1, 5, 9, 1, '#3B3227');    // 碗沿
+  add(1, 6, 1, 3, '#3B3227');    // 左壁
+  add(9, 6, 1, 3, '#3B3227');    // 右壁
+  add(2, 6, 7, 3, '#F3E8D2');    // 碗身填充
+  add(2, 9, 7, 1, '#3B3227');    // 碗底
 
   return rects;
 }
@@ -93,8 +99,7 @@ Page({
 
   refreshProgress() {
     const saved = readCheckins();
-    const days = Object.keys(saved).map(Number).sort(function (a, b) { return a - b; });
-    const recorded = days.length;
+    const recorded = Object.keys(saved).length;
 
     let streak = 0;
     for (let i = 14; i >= 1; i--) {
@@ -138,7 +143,9 @@ Page({
     const list = this.data.constraintList.map(function (it) {
       return it.name === name ? { name: it.name, on: !it.on } : it;
     });
-    app.globalData.constraints = list.filter(function (it) { return it.on; }).map(function (it) { return it.name; });
+    app.globalData.constraints = list
+      .filter(function (it) { return it.on; })
+      .map(function (it) { return it.name; });
     app.savePrefs();
     this.setData({ constraintList: list });
     this.refreshQuest();
