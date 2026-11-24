@@ -65,3 +65,11 @@ dist/
 .fresh/
 .fresh2/
 
+
+# 小程序对拍基准（可重新生成）
+tools/_expected.json
+
+
+# 微信开发者工具的本地私有配置（含本机设置）
+miniprogram/project.private.config.json
+
